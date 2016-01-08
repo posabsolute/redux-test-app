@@ -1,0 +1,14 @@
+.header-section{
+	position:relative;
+	z-index: 3;
+	height:150px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center; 
+}
+
+	.header-section__title{
+		padding:100px 0 0 15px;
+		font-size:22px;
+		color:#fff;
+	}

@@ -1,0 +1,7 @@
+/*
+ * action types
+ */
+
+export const PROJECT_LIST_REQUEST = 'PROJECT_LIST_REQUEST';
+export const PROJECT_LIST_FETCH = 'PROJECT_LIST_FETCH';
+export const PROJECT_LIST_FAILURE = 'PROJECT_LIST_FAILURE';

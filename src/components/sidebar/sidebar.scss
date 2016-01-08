@@ -1,0 +1,81 @@
+.sidebar{
+	position:fixed;
+	z-index:1000;
+	top:0;left:0;
+	visibility:hidden;
+	width:230px; height:100%;
+	margin-left:-230px;
+	opacity:0.5;
+	border-right:1px solid #eee;
+	display:block;
+	background-color: #fff;
+	transition:opacity 0.3s, margin-left 0.3s;
+}
+
+	.sidebar--show{
+		visibility:visible;
+		opacity:1;
+		margin-left:0px;
+	}
+	.sidebar--hiding{
+		visibility:visible;
+		opacity:0.8;
+		margin-left:-230px;
+	}
+	.sidebar--hidden{visibility:hidden;}
+
+
+.sidebar_user{
+	padding:0px 10px 10px 10px;
+	border-bottom: 1px solid #f4f4f4;
+}
+
+	.sidebar_avatar{
+		float:left;
+		width: 50px; height:50px;
+		border-radius: 50px;
+	}
+
+	.sidebar_avatar_desc{
+		width:140px;
+		padding:5px 0 0 10px;
+		float:left;
+	}
+		.sidebar_avatar_name{
+			font-size: 16px;
+			color: #1D1D26;
+			padding-bottom:1px;
+			line-height: 20px;
+		}
+
+		.sidebar_avatar_title{
+			opacity: 0.6;
+			font-family: Avenir-Book;
+			font-size: 11px;
+			color: #1D1D26;
+			line-height: 14px;			
+		}
+
+
+.sidebar_list{
+	position:relative;
+	height:50px;
+	text-indent: 15px;
+	color:#333;
+	line-height:50px;
+	border-bottom: 1px solid #f4f4f4;
+}
+	.sidebar_list_indented{
+		text-indent: 30px;
+	}
+
+.sidebar_close-btn{
+	padding:6px 10px 0 0;
+	display:inline-block;
+	width:40px;
+	height:30px;
+	color:#333;
+	font-size:34px;
+}
+
+.aright{text-align: right;}
