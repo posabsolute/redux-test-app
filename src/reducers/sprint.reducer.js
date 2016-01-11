@@ -15,9 +15,13 @@ export function sprint(state = initialState, action) {
     };
 
   case SPRINT_ISSUES_FETCH:
+    const issues = state.issues;
+    const storyPointsArray = Object.keys(issues).map(issue=>issues[issue].fields.customfield_10004);
+    const storyPoints = storyPointsArray.reduce((spa, spb) => parseInt(spa, 10) + parseInt(spb, 10));
     return {
       ...state,
       issues: action.data,
+      storyPoints,
     };
 
   default:

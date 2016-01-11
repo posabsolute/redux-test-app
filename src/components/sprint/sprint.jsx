@@ -14,6 +14,8 @@ const SprintsListComponent = ({sprint, loadIssue, getFormatDate}) => {
             title={issue.fields.summary}
             desc={getFormatDate(issue.fields.resolutiondate)}
             listItem={issue}
+            floatingLabel={issue.fields.customfield_10004 && issue.fields.customfield_10004 + " points"}
+            labels={[issue.fields.issuetype.name]}
           />
         )}
       </div>

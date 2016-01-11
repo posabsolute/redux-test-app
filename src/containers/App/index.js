@@ -39,8 +39,21 @@ export class App extends Component {
         <GrowlerContainer messages={GrowlerMessages} showFor={3000} currentLocale="enUS" />
         <Header title={this.props.pageStore.titleSmall} menuLeftClick={this.props.showSidebar} />
         <Sidebar list={this.props.projectsStore} status={this.props.sidebarStore.status} user={this.props.userStore} hideSidebar={this.props.hideSidebar} />
-        {this.props.children}
+        <div className="container">{this.props.children}</div>
       </section>
     );
   }
 }
+
+App.propTypes = {
+  pageStore: {
+    titleSmall: React.PropTypes.string,
+  },
+  showSidebar: React.PropTypes.func,
+  hideSidebar: React.PropTypes.func,
+  userStore: React.PropTypes.object,
+  projectsStore: React.PropTypes.array,
+  sidebarStore: {
+    status: React.PropTypes.string,
+  },
+};

@@ -28,13 +28,12 @@ export default class SprintsListContainer extends React.Component {
     this.props.updatePageTitle(this.props.sprint.name, this.props.sprint.name);
   }
   getFormatDate(completedDate) {
-    console.log(completedDate);
     const longOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     const date1 = new Intl.DateTimeFormat('en-US', longOptions).format(new Date(completedDate));
     return `Completed on ${date1}`;
   }
   render() {
-    return <SprintComponent {...this.props} getFormatDate={this.getFormatDate} />;
+    return <SprintComponent {...this.props} getFormatDate={this.getFormatDate} storyPoints={this.storyPoints} />;
   }
 }
 

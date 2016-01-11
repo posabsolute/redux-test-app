@@ -67,7 +67,6 @@ export default store => next => action => {
     throw new Error('Expected an array of three action types.');
   }
   if (!types.every(type => typeof type === 'string')) {
-    console.log(types);
     throw new Error('Expected action types to be strings.');
   }
 

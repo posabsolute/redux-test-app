@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux';
 import { updatePath } from 'redux-simple-router';
 import { connect } from 'react-redux';
 import SprintsListComponent from './sprints.jsx';
-import * as actions from 'actions/sprints.action';
+import * as sprintActions from 'actions/sprints.action';
+import * as pageActions from 'actions/page.action';
 
 const mapStateToProps = state => ({
   sprints: state.sprints,
@@ -12,7 +13,8 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => {
   return {
-    ...bindActionCreators(actions, dispatch),
+    ...bindActionCreators(sprintActions, dispatch),
+    ...bindActionCreators(pageActions, dispatch),
     loadSprint: (sprint) => {
       dispatch(updatePath(`/sprint/${sprint.id}`));
     },

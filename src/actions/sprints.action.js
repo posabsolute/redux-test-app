@@ -1,6 +1,6 @@
 import { CALL_API } from '../middlewares/api';
 import sprintModel from '../models/sprint.model';
-import {SPRINTS_LIST_REQUEST, SPRINTS_LIST_FETCH, SPRINTS_LIST_FAILURE,
+import {SPRINTS_LIST_REQUEST, SPRINTS_LIST_FETCH, SPRINT_UPDATE_POINTS, SPRINTS_LIST_FAILURE,
        SPRINT_ISSUES_REQUEST, SPRINT_ISSUES_FETCH, SPRINT_ISSUES_FAILURE,
        SPRINT_REQUEST, SPRINT_FETCH, SPRINT_FAILURE} from './types/sprints.types';
 
@@ -34,6 +34,14 @@ export function fetchSprint(id) {
       endpoint: sprintModel.endPoint(id),
       model: sprintModel,
     },
+  };
+}
+
+
+export function updateSprintPoints(id) {
+  return {
+    type: SPRINT_UPDATE_POINTS,
+    id,
   };
 }
 

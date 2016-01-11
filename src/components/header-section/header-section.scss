@@ -8,7 +8,11 @@
 }
 
 	.header-section__title{
-		padding:100px 0 0 15px;
+		position:absolute;
+		bottom:11px;
 		font-size:22px;
+		height:30px;
+		overflow: hidden;
+		text-overflow:ellipsis;
 		color:#fff;
 	}

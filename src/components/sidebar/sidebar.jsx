@@ -6,7 +6,7 @@ import 'style!./sidebar.scss';
 import 'style!../list/list.scss';
 
 const SidebarComponent = ({status, user, hideSidebar, list}) => {
-  
+
   const sidebarClass = classNames('sidebar', {
     'sidebar--show': status === 'show' ? true : false,
     'sidebar--hiding': status === 'hide' ? true : false,
