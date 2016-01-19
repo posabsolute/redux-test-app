@@ -20,8 +20,8 @@ const mapDispatchToProps = (
   return {
     ...bindActionCreators(validateActions, dispatch),
     onSubmit: (evt, validate) => {
-      const form = evt;
-      console.log(form.username.value)
+      const form = evt.target.elements;
+      console.log(form)
       if (validate.form(form)) {
         dispatch(login({
           username: form.username.value,
