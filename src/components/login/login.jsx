@@ -1,8 +1,10 @@
 import React from 'react';
+import LabelError from 'components/validation/labelErrorComponent';
+
 import 'style!./login.scss';
 import 'style!../form/input-line.scss';
 
-const LoginFormComponent = ({onSubmit}) => (
+const LoginFormComponent = ({onSubmit, validate}) => (
   <div className="">
     <div className="login-bg"></div>
     <div className="row login-top-page">
@@ -17,15 +19,17 @@ const LoginFormComponent = ({onSubmit}) => (
     <div className=" login-page">
       <div className="container">
         <div className="row">
-            <form className="col-sm-6 col-lg-12 login-bottom-container" onSubmit={ (evt) => { evt.preventDefault(); onSubmit(evt);} }>
+            <form className="col-sm-6 col-lg-12 login-bottom-container" onSubmit={ (evt) => { evt.preventDefault(); onSubmit(evt, validate);} }>
               <div className="form-group">
-                <input type="text" name="url" className="input-line" id="url" placeholder="Jira Url (http://company.jira.net)" />
+                <input type="text" name="url" className={validate.classes('input-line', 'url')} id="url" placeholder="Jira Url (http://company.jira.net)" {...validate} />
+                <LabelError field={validate.fieldStore('url')} />
               </div>
               <div className="form-group">
-                <input type="text" name="username" className="input-line" id="username" placeholder="Username" />
+                <input type="text" name="username" className={validate.classes('input-line', 'username')} id="username" placeholder="Username" {...validate} />
+                <LabelError field={validate.fieldStore('username')} />
               </div>
               <div className="form-group">
-                <input type="password" name="password" className="input-line" id="password" placeholder="Password" />
+                <input type="password" name="password" className={validate.classes('input-line', 'password')} id="password" placeholder="Password" {...validate} />
               </div>
               <div className="relative"><button type="submit" className="btn btn-default btn-full" >Sign in</button></div>
             </form>

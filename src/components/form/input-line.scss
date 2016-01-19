@@ -9,11 +9,25 @@
 	margin-bottom:5px;
 	font-size:16px;
 	color:#fff;
+	outline:none;
+	transition: border 300ms ease-out;
 
 	&::-webkit-input-placeholder {
-   		color: #fff;
+   		color: #ddd;
+   		transition: color 300ms ease-out;
+
 	}
 
+	&.input-validation-error{
+		border-bottom:1px solid red;
+		&::-webkit-input-placeholder {
+	   		color: red;
+		}
+	}
+}
+
+.label-error{
+	color:#red;
 }
 
 
@@ -31,4 +45,8 @@
 	line-height:45px;
 	padding:0;
 	background:#424242;
+	&:hover{
+		background-color: #333;
+		color:#fff;
+	}
 }

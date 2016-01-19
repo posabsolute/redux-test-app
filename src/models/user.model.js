@@ -1,13 +1,30 @@
 const userModel = {
+  name:'userModel',
   data: {
-    'self': {
-      type: 'string',
+    'url': {
+      validate: {
+        required: true,
+        func: (value) => {
+          return true;
+        },
+        message: 'This is a test',
+      },
     },
-    'name': {
-      type: 'string',
+    'username': {
+      validate: {
+        required: true,
+        pattern: 'email',
+        //async: function() {
+        //  setTimeout( () => {
+        //      this.resolve("yes");
+        //  }, 2000);
+        //},
+      },
     },
-    'loginInfo': { // scrum or kanbam
-      type: 'object',
+    'password': {
+      validate: {
+        required: true,
+      },
     },
   },
   validate: (dispatch, user) => {

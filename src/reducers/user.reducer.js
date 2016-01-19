@@ -1,5 +1,6 @@
 const initialState = {
   permission: 'not-connected',
+  avatarUrls:{},
 };
 
 export function user(state = initialState, action) {

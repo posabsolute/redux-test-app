@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import apiMiddleware from '../middlewares/api';
+import validateMiddleware from '../middlewares/validate';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
 import ReduxLocalstorage from 'redux-simple-localstorage';
@@ -12,6 +13,7 @@ const createStoreWithMiddleware = compose(
   applyMiddleware(
     thunkMiddleware,
     apiMiddleware,
+    validateMiddleware,
     write,
     logger,
   ),
@@ -19,7 +21,7 @@ const createStoreWithMiddleware = compose(
 )(createStore);
 
 export default function configureStore(initialState) {
-  const store = createStoreWithMiddleware(rootReducer, read() || initialState);
+  const store = createStoreWithMiddleware(rootReducer, initialState);
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

@@ -19,6 +19,7 @@ const mapStateToProps = (state) => {
     userStore: state.user,
     projectsStore: state.projects,
     sidebarStore: state.sidebar,
+    validationStore: state.validation,
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -34,12 +35,18 @@ export class App extends Component {
     children: React.PropTypes.any,
   }
   render() {
+    const childrenWithProps = React.Children.map(this.props.children, (child) => {
+        return React.cloneElement(child, {
+          hideSidebar: this.props.hideSidebar,
+          showSidebar: this.props.showSidebar,
+        });
+    });
     return (
       <section>
         <GrowlerContainer messages={GrowlerMessages} showFor={3000} currentLocale="enUS" />
         <Header title={this.props.pageStore.titleSmall} menuLeftClick={this.props.showSidebar} />
         <Sidebar list={this.props.projectsStore} status={this.props.sidebarStore.status} user={this.props.userStore} hideSidebar={this.props.hideSidebar} />
-        <div className="container">{this.props.children}</div>
+        <div className="container">{childrenWithProps}</div>
       </section>
     );
   }
