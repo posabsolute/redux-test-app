@@ -21,7 +21,7 @@ const mapDispatchToProps = (
 ) => {
   return {
     ...bindActionCreators(validateActions, dispatch),
-    onSubmit: function submit(evt, validate) {
+    onSubmit: function submit(evt, validate, redirect) {
       const form = evt.target;
       if (validate.formValidate(form.elements)) {
         dispatch(login({
@@ -30,7 +30,7 @@ const mapDispatchToProps = (
           url: form.url.value,
 
         })).then(() =>{
-          dispatch(updatePath(this.props.redirect));
+          dispatch(updatePath(redirect));
         });
       }
     },

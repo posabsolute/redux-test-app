@@ -4,7 +4,18 @@ export function sprints(state = [], action) {
   switch (action.type) {
 
   case SPRINTS_LIST_FETCH:
-    return action.data;
+
+    const sprintsList = action.data.map((sprint) => {
+      const longOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+      const smallOptions = { month: 'long', day: 'numeric' };
+      const date1 = new Intl.DateTimeFormat('en-US', smallOptions).format(new Date(sprint.startDate));
+      const date2 = new Intl.DateTimeFormat('en-US', longOptions).format(new Date(sprint.completeDate));
+      sprint.dateFormatted = `${date1} to ${date2}`;
+
+      return sprint;
+    });
+
+    return sprintsList;
 
   case SPRINT_ISSUES_FETCH:
     return state.map( sprint => {
