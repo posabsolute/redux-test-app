@@ -1,5 +1,6 @@
 const initialState = {
   permission: 'not-connected',
+  name:'cedric',
   avatarUrls:{},
 };
 
