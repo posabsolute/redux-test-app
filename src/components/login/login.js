@@ -1,16 +1,17 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import {validateProps} from 'redux-form-validator';
+import {validateActions} from 'redux-form-validator';
+
 import LoginForm from './login.jsx';
 import { login } from 'actions/user.action';
 import userModel from 'models/user.model';
-import validate from 'components/validation/props.js';
-import * as validateActions from 'actions/validate.action.js';
 
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    validationStore: state.validation,
+    validationStore: state.validate,
   };
 };
 
@@ -19,10 +20,9 @@ const mapDispatchToProps = (
 ) => {
   return {
     ...bindActionCreators(validateActions, dispatch),
-    onSubmit: (evt, validate) => {
-      const form = evt;
-      console.log(form.username.value)
-      if (validate.form(form)) {
+    onSubmit: function submit(evt, validate) {
+      const form = evt.target;
+      if (validate.formValidate(form.elements)) {
         dispatch(login({
           username: form.username.value,
           password: form.password.value,
@@ -37,16 +37,7 @@ const mapDispatchToProps = (
 @connect(mapStateToProps, mapDispatchToProps)
 export default class LoginComponent extends React.Component {
   componentWillMount() {
-    this.validate = validate(this, userModel);
-  }
-  componentDidMount() {
-
-   // this.validate.input('cedric@gmail.com', 'username').then(function(v) {
-   //   console.log(v);
-   // })
-   // .catch(function(e) {
-   //   console.log(e);
-   // });
+    this.validate = validateProps(this, userModel);
   }
   render() {
     return <LoginForm {...this.props} validate={this.validate} />;

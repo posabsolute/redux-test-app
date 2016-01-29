@@ -7,7 +7,7 @@ import { projects } from './projects.reducer';
 import { sprints } from './sprints.reducer';
 import { sprint } from './sprint.reducer';
 import { sidebarReducer } from './sidebar.reducer';
-import { validation } from './validation.reducer';
+import { validateReducer } from 'redux-form-validator';
 import { PageReducer } from './page.reducer';
 
 const rootReducer = combineReducers({
@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
   page: PageReducer,
   growler: GrowlerReducer,
   sidebar: sidebarReducer,
-  validation,
+  validate: validateReducer,
   projects,
   sprints,
   sprint,

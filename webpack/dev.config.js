@@ -44,7 +44,8 @@ module.exports = {
       loaders: ['react-hot', 'babel?stage=0&loose[]=es6.modules'],
       include: [
         path.resolve(__dirname, "../src"),
-        path.resolve(__dirname, "../node_modules/flash-notification-react-redux")
+        path.resolve(__dirname, "../node_modules/flash-notification-react-redux"),
+        path.resolve(__dirname, "../node_modules/redux-form-validator"),
       ],
     }, {
       test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
