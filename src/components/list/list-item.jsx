@@ -6,7 +6,7 @@ const ListItemComponent = ({onClick, listItem, index, title, desc, labels, float
 
 <div
 	className="list-item"
-	onClick={(evt) => {evt.preventDefault(); onClick(listItem); }}
+	onClick={onClick.bind(this, listItem)}
 	key={'project_' + index} >
     <div className="list-item__title">{title}</div>
     <div className="list-item__desc">{desc}</div>

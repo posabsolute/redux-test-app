@@ -1,8 +1,7 @@
 import React from 'react';
+import InputText from 'components/form/inputText';
 import {LabelError} from 'redux-form-validator';
-
 import 'style!./login.scss';
-import 'style!../form/input-line.scss';
 
 export default ({validate, onSubmit, redirect}) => (
 <div className="">
@@ -20,17 +19,30 @@ export default ({validate, onSubmit, redirect}) => (
     <div className="container">
       <div className="row">
           <form className="col-sm-6 col-lg-12 login-bottom-container" onSubmit={ (evt) => { evt.preventDefault(); onSubmit(evt, validate, redirect); } }>
-            <div className="form-group">
-              <input type="text" className={validate.classes('input-line', 'url')} defaultValue="https://salesfloor.atlassian.net" name="url" placeholder="Jira Url (http://company.jira.net)" {...validate} />
-              <LabelError field={validate.fieldStore('url')} />
-            </div>
-            <div className="form-group">
-              <input type="text" className={validate.classes('input-line', 'username')} defaultValue="posabsolute" name="username" placeholder="Username" {...validate} />
-              <LabelError field={validate.fieldStore('username')} />
-            </div>
-            <div className="form-group">
-              <input type="password" name="password" className={validate.classes('input-line', 'password')} defaultValue="newpass12!" placeholder="Password" {...validate} />
-            </div>
+            <InputText
+              name="url"
+              placeholder="Jira Url (http://company.jira.net)"
+              defaultValue="https://salesfloor.atlassian.net"
+              classes="input-line"
+              errorLabel="true"
+              validate={validate}
+            />
+            <InputText
+              name="username"
+              placeholder="Username"
+              defaultValue="posabsolute"
+              classes="input-line"
+              errorLabel="true"
+              validate={validate}
+            />
+            <InputText
+              name="password"
+              placeholder="password"
+              classes="input-line"
+              errorLabel="true"
+              isPassword="true"
+              validate={validate}
+            />
             <div className="relative"><button type="submit" className="btn btn-default btn-full" >Sign in</button></div>
           </form>
       </div>

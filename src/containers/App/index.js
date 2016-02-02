@@ -36,10 +36,10 @@ export class App extends Component {
   }
   render() {
     const childrenWithProps = React.Children.map(this.props.children, (child) => {
-        return React.cloneElement(child, {
-          hideSidebar: this.props.hideSidebar,
-          showSidebar: this.props.showSidebar,
-        });
+      return React.cloneElement(child, {
+        hideSidebar: this.props.hideSidebar,
+        showSidebar: this.props.showSidebar,
+      });
     });
     return (
       <section>

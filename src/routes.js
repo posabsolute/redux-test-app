@@ -6,7 +6,7 @@ import { App } from 'containers/App';
 import Login from 'containers/login.js';
 import ProjectList from 'containers/projects.js';
 import SprintsList from 'containers/sprints.js';
-import Sprint from 'components/sprint/sprint.js';
+import Sprint from 'containers/sprint.js';
 
 export default (
   <Route path="/" component={App}>

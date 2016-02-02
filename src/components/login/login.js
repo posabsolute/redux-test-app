@@ -24,6 +24,7 @@ const mapDispatchToProps = (
     onSubmit: function submit(evt, validate, redirect) {
       const form = evt.target;
       if (validate.formValidate(form.elements)) {
+        
         dispatch(login({
           username: form.username.value,
           password: form.password.value,

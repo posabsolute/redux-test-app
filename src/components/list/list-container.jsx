@@ -1,16 +1,49 @@
 import React from 'react';
 import ListItem from 'components/list/list-item';
 
-export default ({items, onClick, map}) => (
-<div className="list-item_container col-lg-12">
-  {items.map((item, index) =>
-    <ListItem
-      index={index}
-      onClick={onClick}
-      title={item[map.title]}
-      desc={item[map.desc]}
-      listItem={item}
-    />
-  )}
-  </div>
-);
+export default class ListContainer extends React.Component {
+  getString(element, modifier, item) {
+    if (typeof element === 'string') {
+      return !modifier ? item[element] : modifier(item[element]);
+    }
+
+    if (typeof element === 'object') {
+      let content = item;
+      element.map(field => content = content[field]);
+      console.log(content);
+      return !modifier ? content : modifier(content);
+    }
+  }
+
+  render() {
+    const {title, items, map, onClick, labelsMod, titleMod, floatingLabelMod, descMod} = this.props;
+    return (
+      <div className="list-item_container col-lg-12">
+        <div className="list-title">{title}</div>
+        {items.map((item, index) =>
+          <ListItem
+            index={index}
+            onClick={onClick}
+            title={this.getString(map.title, titleMod, item)}
+            floatingLabel={this.getString(map.floatingLabel, floatingLabelMod, item)}
+            labels={this.getString(map.labels, labelsMod, item)}
+            desc={this.getString(map.desc, descMod, item)}
+            listItem={item}
+          />
+        )}
+      </div>
+    );
+  }
+}
+
+
+ListContainer.propTypes = {
+  title: React.PropTypes.string,
+  items: React.PropTypes.array,
+  map: React.PropTypes.object,
+  onClick: React.PropTypes.func,
+  labelsMod: React.PropTypes.func,
+  titleMod: React.PropTypes.func,
+  floatingLabelMod: React.PropTypes.func,
+  descMod: React.PropTypes.func,
+};

@@ -13,6 +13,7 @@ const mapDispatchToProps = dispatch => {
     ...bindActionCreators(pageActions, dispatch),
     ...bindActionCreators(projectsActions, dispatch),
     loadSprints: (project) => {
+      console.log(project)
       dispatch(updatePath(`/projects/${project.id}/sprints`));
     },
   };
@@ -22,7 +23,7 @@ const mapDispatchToProps = dispatch => {
 export default class ProjectListContainer extends React.Component {
   componentWillMount() {
     this.props.fetchProjects();
-    this.props.updatePageTitle('Your Projects', 'Projects');
+    this.props.updatePageTitle('Your Projectss', 'Projects');
   }
   render() {
     return (
@@ -31,7 +32,7 @@ export default class ProjectListContainer extends React.Component {
         <List
           items={this.props.projects}
           onClick={this.props.loadSprints}
-          map={{title:'name', desc: 'type'}} />
+          map={{title: 'name', desc: 'type'}} />
       </section>
     );
   }
