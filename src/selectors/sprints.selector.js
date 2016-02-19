@@ -6,7 +6,7 @@ export const sprintsListSelector = createSelector(
   [ sprintsSelector ],
   (sprints) => {
     return {
-      sprintsByDate: sprints.sort((sprintA, sprintB) => new Date(sprintB.completeDate) - new Date(sprintA.completeDate)),
+      sprintsByDate: sprints.sort((sprintA, sprintB) => new Date(sprintB.completeDate) - new Date(sprintA.completeDate)) || [],
     };
   }
 );

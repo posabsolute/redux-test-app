@@ -24,13 +24,16 @@ const mapDispatchToProps = (
     onSubmit: function submit(evt, validate, redirect) {
       const form = evt.target;
       if (validate.formValidate(form.elements)) {
-        
+
         dispatch(login({
           username: form.username.value,
           password: form.password.value,
           url: form.url.value,
 
         })).then(() =>{
+          localStorage.setItem('username', form.username.value);
+          localStorage.setItem('password', form.password.value);
+          localStorage.setItem('url', form.url.value);
           dispatch(updatePath(redirect));
         });
       }

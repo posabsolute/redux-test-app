@@ -1,0 +1,23 @@
+.comment{
+	padding:10px;
+	border-bottom: 1px solid #f4f4f4;
+}
+
+  .comment__meta{
+    padding-top:4px;
+    color: #aaa;
+    font-size: 11px;
+  }
+
+    .comment__date,.comment__author{
+      display:inline-block;
+    }
+
+    .comment__spacer{
+      display:inline-block;
+      padding:0 5px;
+    }
+
+.form-comment{
+  padding:10px;
+}

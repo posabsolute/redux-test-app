@@ -53,14 +53,10 @@ export class App extends Component {
 }
 
 App.propTypes = {
-  pageStore: {
-    titleSmall: React.PropTypes.string,
-  },
+  pageStore: React.PropTypes.object,
   showSidebar: React.PropTypes.func,
   hideSidebar: React.PropTypes.func,
   userStore: React.PropTypes.object,
   projectsStore: React.PropTypes.array,
-  sidebarStore: {
-    status: React.PropTypes.string,
-  },
+  sidebarStore: React.PropTypes.object,
 };

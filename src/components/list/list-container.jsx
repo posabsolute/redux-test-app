@@ -10,7 +10,6 @@ export default class ListContainer extends React.Component {
     if (typeof element === 'object') {
       let content = item;
       element.map(field => content = content[field]);
-      console.log(content);
       return !modifier ? content : modifier(content);
     }
   }
@@ -23,7 +22,8 @@ export default class ListContainer extends React.Component {
         {items.map((item, index) =>
           <ListItem
             index={index}
-            onClick={onClick}
+            key={title + index}
+            onClick={onClick.bind(null, item)}
             title={this.getString(map.title, titleMod, item)}
             floatingLabel={this.getString(map.floatingLabel, floatingLabelMod, item)}
             labels={this.getString(map.labels, labelsMod, item)}

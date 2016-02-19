@@ -3,7 +3,7 @@ import InputText from 'components/form/inputText';
 import {LabelError} from 'redux-form-validator';
 import 'style!./login.scss';
 
-export default ({validate, onSubmit, redirect}) => (
+export default ({user, validate, onSubmit, redirect}) => (
 <div className="">
   <div className="login-bg"></div>
   <div className="row login-top-page">
@@ -30,7 +30,7 @@ export default ({validate, onSubmit, redirect}) => (
             <InputText
               name="username"
               placeholder="Username"
-              defaultValue="posabsolute"
+              defaultValue={user.username}
               classes="input-line"
               errorLabel="true"
               validate={validate}

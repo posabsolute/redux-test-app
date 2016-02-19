@@ -7,6 +7,7 @@ import Login from 'containers/login.js';
 import ProjectList from 'containers/projects.js';
 import SprintsList from 'containers/sprints.js';
 import Sprint from 'containers/sprint.js';
+import Issue from 'containers/issue.js';
 
 export default (
   <Route path="/" component={App}>
@@ -14,5 +15,6 @@ export default (
     <Route path="projects" component={ProjectList} title="Your Projects" titleSmall="Projects" />
     <Route path="projects/:id/sprints" component={SprintsList} title="Your Sprints" titleSmall="Sprints" />
     <Route path="sprint/:id" component={Sprint} />
+    <Route path="issue/:id" component={Issue} />
   </Route>
 );

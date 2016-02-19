@@ -1,7 +1,7 @@
 import React from 'react';
 import 'style!./header.scss';
 
-const HeaderSection = ({menuLeftClick, title}) => (
+export default ({menuLeftClick, title}) => (
   <div>
     <div className="header-bg"></div>
     <div className="header-title">{title}</div>
@@ -9,9 +9,6 @@ const HeaderSection = ({menuLeftClick, title}) => (
       <a className="header-btn-menu" onClick={ (evt) => { evt.preventDefault(); menuLeftClick(); }}>
         <span className="icon ion-navicon"></span>
       </a>
-      
     </header>
   </div>
 );
-
-export default HeaderSection;

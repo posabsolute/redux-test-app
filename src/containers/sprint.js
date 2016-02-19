@@ -22,8 +22,8 @@ const mapDispatchToProps = dispatch => {
   return {
     ...bindActionCreators(actions, dispatch),
     ...bindActionCreators(pageActions, dispatch),
-    loadIssue: (id) => {
-      dispatch(updatePath(`/issue/${id}`));
+    loadIssue: (issue) => {
+      dispatch(updatePath(`/issue/${issue.id}`));
     },
   };
 };
@@ -51,20 +51,30 @@ export default class SprintsListContainer extends React.Component {
             labels: ['fields', 'issuetype', 'name'],
             floatingLabel: ['fields', 'customfield_10004'],
           }} />
+        <List
+          title="Other Issues"
+          items={this.props.otherIssues}
+          descMod={getFormatDate}
+          onClick={this.props.loadIssue}
+          map={{
+            title: ['fields', 'summary'],
+            desc: ['fields', 'resolutiondate'],
+            labels: ['fields', 'issuetype', 'name'],
+            floatingLabel: ['fields', 'customfield_10004'],
+          }} />
       </section>
     );
   }
 }
 
 SprintsListContainer.propTypes = {
+  otherIssues: React.PropTypes.array,
   sprints: React.PropTypes.array,
   stories: React.PropTypes.array,
   loadIssue: React.PropTypes.func,
   fetchSprint: React.PropTypes.func,
   updatePageTitle: React.PropTypes.func,
-  sprint: {
-    name: React.PropTypes.string,
-  },
+  sprint: React.PropTypes.object,
   fetchSprintIssues: React.PropTypes.func,
   params: React.PropTypes.object,
 };

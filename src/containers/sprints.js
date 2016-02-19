@@ -8,11 +8,11 @@ import HeaderSection from 'components/header-section/header-section';
 
 import * as sprintActions from 'actions/sprints.action';
 import * as pageActions from 'actions/page.action';
-import {sprintsListSelector} from 'selectors/issues.selector';
+import {sprintsListSelector} from 'selectors/sprints.selector';
 
 const mapStateToProps = state => ({
   sprints: state.sprints,
-  sprintsByDate: sprintsListSelector.sprintsByDate,
+  sprintsByDate: sprintsListSelector(state).sprintsByDate,
 
 });
 const mapDispatchToProps = dispatch => {

@@ -1,7 +1,10 @@
 const initialState = {
   permission: 'not-connected',
-  name:'cedric',
-  avatarUrls:{},
+  username: localStorage.getItem('username') || '',
+  password: localStorage.getItem('password') || '',
+  url: localStorage.getItem('url') || '',
+  name: 'cedric',
+  avatarUrls: {},
 };
 
 export function user(state = initialState, action) {

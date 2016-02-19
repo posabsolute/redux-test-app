@@ -6,6 +6,7 @@ import { GrowlerReducer } from 'flash-notification-react-redux';
 import { projects } from './projects.reducer';
 import { sprints } from './sprints.reducer';
 import { sprint } from './sprint.reducer';
+import { issue } from './issue.reducer';
 import { sidebarReducer } from './sidebar.reducer';
 import { validateReducer } from 'redux-form-validator';
 import { PageReducer } from './page.reducer';
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   projects,
   sprints,
   sprint,
+  issue,
 });
 
 export default rootReducer;

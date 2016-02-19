@@ -1,10 +1,11 @@
-const sprintModel = {
+export default {
   data: {},
+  endpoint: (id) => `/rest/agile/1.0/issue/${id}`,
+  endpointProcessor: (resp) => {
+    return {
+      key: resp.key,
+      self: resp.self,
+      ...resp.fields,
+    };
   },
-  endpointCollection: (id) => `/rest/agile/1.0/board/${id}/sprint?state=active,closed`,
-  endPoint: (id) => `/rest/agile/1.0/sprint/${id}/issue`,
-  endpointProcessor: (resp) => resp.issues,
-  endpointCollectionProcessor: (resp) => resp.values,
 };
-
-export default sprintModel;
