@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import 'style!./sidebar.scss';
 import 'style!../list/list.scss';
 
-const SidebarComponent = ({status, user, hideSidebar, list}) => {
+export default ({status, user, hideSidebar, list, logout, listClick}) => {
 
   const sidebarClass = classNames('sidebar', {
     'sidebar--show': status === 'show' ? true : false,
@@ -28,14 +28,12 @@ const SidebarComponent = ({status, user, hideSidebar, list}) => {
       </div>
         {list.map((elem, index) => {
           return (
-            <div className="sidebar_list sidebar_list_indented" key={'sidebar_item_' + index}>
+            <div className="sidebar_list sidebar_list_indented" key={'sidebar_item_' + index} onClick={listClick.bind(this, elem, hideSidebar)}>
               {elem.name}
             </div>
           );
         })}
-      <div className="sidebar_list">Logout</div>
+      <div className="sidebar_list" onClick={logout}>Logout</div>
     </section>
   );
 };
-
-export default SidebarComponent;

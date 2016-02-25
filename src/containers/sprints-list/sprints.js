@@ -1,13 +1,11 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { updatePath } from 'redux-simple-router';
 import { connect } from 'react-redux';
 
 import List from 'components/list/list-container';
 import HeaderSection from 'components/header-section/header-section';
+import PageWrapper from 'components/page-wrapper';
 
-import * as sprintActions from 'actions/sprints.action';
-import * as pageActions from 'actions/page.action';
 import {sprintsListSelector} from 'selectors/sprints.selector';
 
 const mapStateToProps = state => ({
@@ -17,10 +15,8 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => {
   return {
-    ...bindActionCreators(sprintActions, dispatch),
-    ...bindActionCreators(pageActions, dispatch),
     loadSprint: (sprint) => {
-      dispatch(updatePath(`/sprint/${sprint.id}`));
+      dispatch(updatePath(`/sprint/${sprint.id}/index`));
     },
   };
 };
@@ -28,10 +24,9 @@ const mapDispatchToProps = dispatch => {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SprintsListContainer extends React.Component {
   componentWillMount() {
-    this.props.fetchSprints(this.props.params.id);
-    this.props.updatePageTitle('Your Sprints', 'Sprints');
+    this.props.showSprintsListBottomBar(1);
   }
-  render() {
+  page() {
     return (
       <section className="row">
         <HeaderSection title={"Your Sprints"} background={"/images/pjbg.jpg"} />
@@ -42,11 +37,18 @@ export default class SprintsListContainer extends React.Component {
       </section>
     );
   }
+
+  render() {
+    return (
+      <PageWrapper state={this.props.sprintsByDate} wrap={this.page()} />
+    );
+  }
 }
 
 SprintsListContainer.propTypes = {
   fetchSprints: React.PropTypes.func,
   loadSprint: React.PropTypes.func,
+  showSprintsListBottomBar: React.PropTypes.func,
   sprintsByDate: React.PropTypes.object,
   loadSprints: React.PropTypes.func,
   updatePageTitle: React.PropTypes.func,

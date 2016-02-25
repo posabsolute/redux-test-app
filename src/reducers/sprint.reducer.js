@@ -1,11 +1,20 @@
-import { SPRINT_ISSUES_FETCH, SPRINT_FETCH } from 'actions/types/sprints.types';
+import { SPRINT_ISSUES_FETCH, SPRINT_FETCH, REPORT_FETCH } from 'actions/types/sprints.types';
 
 const initialState = {
   issues: [],
+  puntedIssues: [],
+  completedIssues: [],
 };
 
 export function sprint(state = initialState, action) {
   switch (action.type) {
+
+
+  case REPORT_FETCH:
+    return {
+      ...state,
+      ...action.data.contents,
+    };
 
   case SPRINT_FETCH:
     return {

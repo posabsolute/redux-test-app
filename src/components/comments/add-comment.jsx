@@ -3,8 +3,8 @@ import 'style!./comment.scss';
 import Textarea from 'components/form/Textarea';
 
 
-export default ({validate}) => (
-  <form className="form-comment">
+export default ({validate, onSubmit}) => (
+  <form className="form-comment" onSubmit={onSubmit}>
     <Textarea
       name="comment"
       placeholder="Your Comment"

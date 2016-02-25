@@ -30,9 +30,12 @@ const mapDispatchToProps = (
           password: form.password.value,
           url: form.url.value,
 
-        })).then(() =>{
+        })).then((action) =>{
           localStorage.setItem('username', form.username.value);
           localStorage.setItem('password', form.password.value);
+          localStorage.setItem('displayName', action.data.displayName);
+          localStorage.setItem('emailAddress', action.data.emailAddress);
+          localStorage.setItem('avatarUrls', action.data.avatarUrls['48x48']);
           localStorage.setItem('url', form.url.value);
           dispatch(updatePath(redirect));
         });

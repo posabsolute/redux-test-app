@@ -25,12 +25,6 @@ const mapDispatchToProps = dispatch => {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class IssueContainer extends React.Component {
   componentWillMount() {
-    this.props.updatePageTitle(this.props.issue.key, this.props.issue.key);
-    this.loadIssue();
-  }
-
-  reloadIssue() {
-    this.props.clearIssue();
     this.loadIssue();
   }
 
@@ -38,6 +32,15 @@ export default class IssueContainer extends React.Component {
     this.props.fetchIssue(this.props.params.id).then(()=>{
       this.props.updatePageTitle(this.props.issue.key, this.props.issue.key);
     });
+  }
+
+  componentWillUnmount(){
+    this.props.clearIssue();
+  }
+
+  reloadIssue() {
+    this.props.clearIssue();
+    this.loadIssue();
   }
 
   page() {
@@ -52,7 +55,6 @@ export default class IssueContainer extends React.Component {
   }
 
   render() {
-    console.log(PageWrapper);
     return (
       <PageWrapper state={this.props.issue.key} wrap={this.page()} />
     );

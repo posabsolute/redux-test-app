@@ -3,8 +3,11 @@ const initialState = {
   username: localStorage.getItem('username') || '',
   password: localStorage.getItem('password') || '',
   url: localStorage.getItem('url') || '',
-  name: 'cedric',
-  avatarUrls: {},
+  displayName: localStorage.getItem('displayName') || '',
+  emailAddress: localStorage.getItem('emailAddress') || '',
+  avatarUrls: {
+    '48x48': localStorage.getItem('avatarUrls') || '',
+  },
 };
 
 export function user(state = initialState, action) {

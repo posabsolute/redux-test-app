@@ -15,7 +15,6 @@ export default class PageWrapper extends React.Component {
   }
 
   isEmpty(obj) {
-    console.log(obj);
     // null and undefined are "empty"
     if (obj == null) return true;
 

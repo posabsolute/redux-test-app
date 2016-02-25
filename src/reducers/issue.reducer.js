@@ -1,4 +1,4 @@
-import { ISSUE_FETCH } from 'actions/types/issue.types';
+import { ISSUE_FETCH, ISSUE_CLEAR } from 'actions/types/issue.types';
 
 const initialState = {
   priority: {},
@@ -20,6 +20,9 @@ export function issue(state = initialState, action) {
       ...state,
       ...action.data,
     };
+
+  case ISSUE_CLEAR:
+    return initialState;
 
   default:
     return state;

@@ -6,6 +6,7 @@ import List from 'components/list/list-container';
 import HeaderSection from 'components/header-section/header-section.jsx';
 import * as projectsActions from 'actions/projects.action';
 import * as pageActions from 'actions/page.action';
+import PageWrapper from 'components/page-wrapper';
 
 const mapStateToProps = state => ({projects: state.projects});
 const mapDispatchToProps = dispatch => {
@@ -13,8 +14,7 @@ const mapDispatchToProps = dispatch => {
     ...bindActionCreators(pageActions, dispatch),
     ...bindActionCreators(projectsActions, dispatch),
     loadSprints: (project) => {
-      console.log(project)
-      dispatch(updatePath(`/projects/${project.id}/sprints`));
+      dispatch(updatePath(`/projects/${project.id}/sprints/index`));
     },
   };
 };
@@ -25,7 +25,7 @@ export default class ProjectListContainer extends React.Component {
     this.props.fetchProjects();
     this.props.updatePageTitle('Your Projectss', 'Projects');
   }
-  render() {
+  page() {
     return (
       <section className="row">
         <HeaderSection title={"Project List"} background={"/images/pjbg.jpg"} />
@@ -34,6 +34,11 @@ export default class ProjectListContainer extends React.Component {
           onClick={this.props.loadSprints}
           map={{title: 'name', desc: 'type'}} />
       </section>
+    );
+  }
+  render() {
+    return (
+      <PageWrapper state={this.props.projects} wrap={this.page()} />
     );
   }
 }

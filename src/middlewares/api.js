@@ -6,15 +6,51 @@ const API_ROOT = 'http://127.0.0.1:8080/';
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
-function callApi(endpoint, user, dataProcessor, store, sideEffectSuccess) {
+function callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method, postData) {
   const callUrl = user.url + endpoint;
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + callUrl : callUrl;
+  console.log(postData);
+  /*
+  const request = new Request(fullUrl, {
+    method: method || 'GET',
+    credentials: 'same-origin',
+    headers: new Headers({
+      'X-Atlassian-Token' : 'nocheck',
+      'Authorization': 'Basic ' + btoa(user.username + ':' + user.password),
+    })
+  });
 
+  // Now use it!
+  return fetch(request).then((resp) => { return resp.json(); }).then((data) => {
+    console.log(data)
+    if (sideEffectSuccess) {
+      sideEffectSuccess.call(this, store.dispatch);
+    }
+    return (dataProcessor) ? dataProcessor(data) : data;
+
+  }, (data, status, response) =>{
+    store.dispatch({
+      type: 'GROWLER__SHOW',
+      growler: {
+        text: response,
+        type: 'growler--error',
+      },
+    });
+
+  });
+/* */
   return $.ajax({
     url: fullUrl,
-    crossDomain: true,
+    data: JSON.stringify(postData),
+    processData: false,
+    xhrFields: {
+      withCredentials: true,
+    },
+    contentType: "application/json",
+    method: method || 'GET',
     headers: {
       'Accept': 'application/json',
+      'X-Atlassian-Token' : 'no-check',
       'x-requested-with': 'XMLHttpRequest',
       'Authorization': 'Basic ' + btoa(user.username + ':' + user.password),
     },
@@ -35,6 +71,7 @@ function callApi(endpoint, user, dataProcessor, store, sideEffectSuccess) {
     });
 
   });
+
 }
 
 // Action key that carries API call info interpreted by this Redux middleware.
@@ -47,9 +84,9 @@ export default store => next => action => {
   if (typeof callAPI === 'undefined') {
     return next(action);
   }
-
+  console.log("tabrnak");
   let { endpoint } = callAPI;
-  const { dataProcessor, types, callData, sideEffectSuccess, validate } = callAPI;
+  const { dataProcessor, types, callData, sideEffectSuccess, validate, method, postData } = callAPI;
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState());
@@ -81,7 +118,7 @@ export default store => next => action => {
   const user = store.getState().user;
 
 
-  return callApi(endpoint, user, dataProcessor, store, sideEffectSuccess).then(
+  return callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method, postData).then(
     data => next(actionWith({
       data,
       type: successType,

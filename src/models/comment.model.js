@@ -7,5 +7,5 @@ export default {
       },
     },
   },
-  endpoint: (id) => `/rest/agile/1.0/issue/${id}/comment`,
+  endpoint: (id) => `/rest/api/2/issue/${id}/comment`,
 };

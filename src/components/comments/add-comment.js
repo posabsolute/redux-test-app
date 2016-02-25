@@ -19,9 +19,11 @@ const mapDispatchToProps = (
   return {
     ...bindActionCreators(issueActions, dispatch),
     ...bindActionCreators(validateActions, dispatch),
-    onSubmit: function submit(evt, validate) {
-      if (validate.formValidate(evt.target.elements)) {
-        this.props.addComment();
+    onSubmit(evt) {
+      evt.preventDefault();
+      if (this.validate.formValidate(evt.target.elements)) {
+        const comment = evt.target.elements.comment.value;
+        this.props.addComment(comment, this.props.issue.key);
       }
     },
   };
@@ -34,6 +36,6 @@ export default class LoginComponent extends React.Component {
     this.validate = validateProps(this, commentModel);
   }
   render() {
-    return <AddCommentForm {...this.props} validate={this.validate} />;
+    return <AddCommentForm {...this.props} validate={this.validate} onSubmit={this.props.onSubmit.bind(this)} />;
   }
 }
