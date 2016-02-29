@@ -32,7 +32,7 @@ const mapDispatchToProps = dispatch => {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SprintsListContainer extends React.Component {
   componentWillMount() {
-    this.props.showSprintBottomBar();
+    this.props.showSprintBottomBar(1);
   }
 
   getSubtitle() {
@@ -51,7 +51,7 @@ export default class SprintsListContainer extends React.Component {
   page() {
     return (
       <section className="row">
-        <HeaderSection title={this.props.sprint.name} background={"/images/pjbg.jpg"} subtitle={this.getSubtitle()} />
+        <HeaderSection title={this.props.sprint.name} background={"/images/img3.jpg"} subtitle={this.getSubtitle()} />
         { this.props.stories.length ?
           (<List
             title="Stories"

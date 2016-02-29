@@ -30,7 +30,18 @@
 	color:#red;
 }
 
-
+.input-line--red{
+	height:30px;
+	line-height:30px;
+	color: #f36;
+	margin-bottom: 0px;
+	margin-top: -7px;
+	border-bottom:1px solid #f36;
+	
+	&::-webkit-input-placeholder {
+   		color: #ff5781;
+	}
+}
 .white{
 	color:#fff;
 }

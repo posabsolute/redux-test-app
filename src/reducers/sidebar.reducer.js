@@ -8,7 +8,6 @@ const initialState = {
 export function sidebarReducer(state = initialState, action) {
   switch (action.type) {
   case SIDEBAR__SHOW:
-    console.log(action);
     return {
       ...state,
       status: 'show',

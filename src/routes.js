@@ -16,6 +16,7 @@ import Burndown from 'containers/sprint/burndown.js';
 import SprintDevWork from 'containers/sprint/developers.js';
 
 import Issue from 'containers/issue.js';
+import SearchIssue from 'containers/search.js';
 
 
 export default (
@@ -33,7 +34,9 @@ export default (
       <Route path="burndown" component={Burndown} />
       <Route path="index" component={Sprint} />
     </Route>
-    
+
+    <Route path="search/issues" component={SearchIssue} />
+    <Route path="search/issues/:query" component={SearchIssue} />
     <Route path="issue/:id" component={Issue} />
   </Route>
 );

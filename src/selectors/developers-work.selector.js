@@ -35,11 +35,11 @@ function getDevsWork(sprint, scope) {
   return finalDataset;
 }
 
-function defaultDev(name){
+function defaultDev(name) {
   return {
     assigneeName: name,
     completedIssues: 0,
-    reopenedIssues:0,
+    reopenedIssues: 0,
     issues: {},
     storyPoints: 0,
   }

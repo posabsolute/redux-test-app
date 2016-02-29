@@ -40,10 +40,10 @@ export default class PageWrapper extends React.Component {
   }
 
   getComponent() {
-    if (!this.isEmpty(this.props.state)) {
-      return this.getPage(this.useLoader);
+    if ((this.props.state && this.isEmpty(this.props.state)) || this.props.isLoading === true) {
+      return this.getLoader();
     }
-    return this.getLoader();
+    return this.getPage(this.useLoader);
   }
 
   getPage() {
@@ -62,6 +62,7 @@ export default class PageWrapper extends React.Component {
 
 PageWrapper.propTypes = {
   state: React.PropTypes.obj,
+  isLoading: React.PropTypes.bool,
   wrap: React.PropTypes.func,
 };
 

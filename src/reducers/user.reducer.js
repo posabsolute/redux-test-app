@@ -31,6 +31,14 @@ export function user(state = initialState, action) {
       permission: 'Authorized',
     };
 
+  case 'FETCH_PROJECT':
+    return {
+      ...state,
+      project: {
+        ...action.data,
+      },
+    };
+
   default:
     return state;
   }

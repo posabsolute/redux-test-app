@@ -19,10 +19,16 @@ const mapDispatchToProps = dispatch => {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SprintsListContainer extends React.Component {
   componentWillMount() {
+    this.props.pageBack(false);
     this.props.fetchSprints(this.props.params.id);
     this.props.fetchVelocity();
-    this.props.updatePageTitle('Your Sprints', 'Sprints');
+    this.props.updatePageTitle('Your Sprints', 'Sprints', this.props.routing.path);
   }
+
+  componentWillUnmount() {
+    this.props.clearSprints();
+  }
+
   render() {
     const childrenWithProps = React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child, {
@@ -39,9 +45,12 @@ export default class SprintsListContainer extends React.Component {
 SprintsListContainer.propTypes = {
   fetchSprints: React.PropTypes.func,
   fetchVelocity: React.PropTypes.func,
+  pageBack: React.PropTypes.func,
   showSprintsListBottomBar: React.PropTypes.func,
   sprintsByDate: React.PropTypes.object,
+  routing: React.PropTypes.object,
   loadSprints: React.PropTypes.func,
+  clearSprints: React.PropTypes.func,
   updatePageTitle: React.PropTypes.func,
   params: React.PropTypes.object,
   showSidebar: React.PropTypes.func,

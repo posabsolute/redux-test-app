@@ -29,7 +29,7 @@ export default class SprintsListContainer extends React.Component {
   page() {
     return (
       <section className="row">
-        <HeaderSection title={"Your Sprints"} background={"/images/pjbg.jpg"} />
+        <HeaderSection title={"Your Sprints"} background={"/images/img2.jpg"} />
         <List
           items={this.props.sprintsByDate}
           onClick={this.props.loadSprint}

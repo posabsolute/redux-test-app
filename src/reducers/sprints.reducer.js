@@ -1,4 +1,4 @@
-import { SPRINTS_LIST_FETCH, SPRINT_ISSUES_FETCH, SPRINT_UPDATE_POINTS } from 'actions/types/sprints.types';
+import { SPRINTS_LIST_FETCH, SPRINT_ISSUES_FETCH, SPRINT_UPDATE_POINTS, SPRINTS_CLEAR } from 'actions/types/sprints.types';
 
 export function sprints(state = [], action) {
   switch (action.type) {
@@ -47,6 +47,9 @@ export function sprints(state = [], action) {
       }
       return sprint;
     });
+
+  case SPRINTS_CLEAR:
+    return [];
 
   default:
     return state;

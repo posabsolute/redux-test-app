@@ -13,7 +13,9 @@ const mapDispatchToProps = dispatch => {
   return {
     ...bindActionCreators(pageActions, dispatch),
     ...bindActionCreators(projectsActions, dispatch),
-    loadSprints: (project) => {
+    loadSprints(project) {
+      this.props.selectProject(project);
+      this.props.fetchProjectConfig(project.id);
       dispatch(updatePath(`/projects/${project.id}/sprints/index`));
     },
   };
@@ -22,8 +24,10 @@ const mapDispatchToProps = dispatch => {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProjectListContainer extends React.Component {
   componentWillMount() {
+    this.props.pageBack(false);
+    this.props.hideBottomBar();
     this.props.fetchProjects();
-    this.props.updatePageTitle('Your Projectss', 'Projects');
+    this.props.updatePageTitle('Your Projectss', 'Projects', this.props.routing.path);
   }
   page() {
     return (
@@ -31,7 +35,7 @@ export default class ProjectListContainer extends React.Component {
         <HeaderSection title={"Project List"} background={"/images/pjbg.jpg"} />
         <List
           items={this.props.projects}
-          onClick={this.props.loadSprints}
+          onClick={this.props.loadSprints.bind(this)}
           map={{title: 'name', desc: 'type'}} />
       </section>
     );
@@ -45,6 +49,8 @@ export default class ProjectListContainer extends React.Component {
 
 ProjectListContainer.propTypes = {
   fetchProjects: React.PropTypes.func,
+  pageBack: React.PropTypes.func,
+  routing: React.PropTypes.object,
   projects: React.PropTypes.object,
   loadSprints: React.PropTypes.func,
   updatePageTitle: React.PropTypes.func,

@@ -21,12 +21,23 @@
   img {
     width: 100%;
   }
+
+  .search-no-found{padding-top:200px; text-align: center;}
   
   .pagePad{padding-left:10px; padding-right:10px;}
+  .pad10{padding:10px;}
+  .margtop10{margin-top:10px;}
 
   .relative{
     position:relative;
   }
+
+  .flip-horizontal {
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+    -webkit-transform: scale(-1, 1);
+    -ms-transform: scale(-1, 1);
+    transform: scale(-1, 1);
+}
 
   .cf:before,
   .cf:after {

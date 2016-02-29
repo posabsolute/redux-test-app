@@ -1,4 +1,4 @@
-import { SPRINT_ISSUES_FETCH, SPRINT_FETCH, REPORT_FETCH } from 'actions/types/sprints.types';
+import { SPRINT_ISSUES_FETCH, SPRINT_FETCH, REPORT_FETCH, SPRINT_CLEAR } from 'actions/types/sprints.types';
 
 const initialState = {
   issues: [],
@@ -8,7 +8,6 @@ const initialState = {
 
 export function sprint(state = initialState, action) {
   switch (action.type) {
-
 
   case REPORT_FETCH:
     return {
@@ -35,6 +34,9 @@ export function sprint(state = initialState, action) {
       };
     }
     return state;
+
+  case SPRINT_CLEAR:
+    return initialState;
 
   default:
     return state;

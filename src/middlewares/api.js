@@ -9,7 +9,6 @@ const API_ROOT = 'http://127.0.0.1:8080/';
 function callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method, postData) {
   const callUrl = user.url + endpoint;
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + callUrl : callUrl;
-  console.log(postData);
   /*
   const request = new Request(fullUrl, {
     method: method || 'GET',
@@ -39,38 +38,69 @@ function callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method
 
   });
 /* */
-  return $.ajax({
-    url: fullUrl,
-    data: JSON.stringify(postData),
-    processData: false,
-    xhrFields: {
-      withCredentials: true,
-    },
-    contentType: "application/json",
-    method: method || 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'X-Atlassian-Token' : 'no-check',
-      'x-requested-with': 'XMLHttpRequest',
-      'Authorization': 'Basic ' + btoa(user.username + ':' + user.password),
-    },
-  })
-  .then((data) => {
-    if (sideEffectSuccess) {
-      sideEffectSuccess.call(this, store.dispatch);
+
+  return new Promise((resolve, reject) => {
+    let allPagedData = [];
+    ajaxCall();
+
+    function ajaxCall(startAt) {
+      const url = startAt ? `${fullUrl}&startAt=${startAt}` : fullUrl;
+      return $.ajax({
+        url: url,
+        data: JSON.stringify(postData),
+        processData: false,
+        xhrFields: {
+          withCredentials: true,
+        },
+        contentType: 'application/json',
+        method: method || 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'X-Atlassian-Token' : 'no-check',
+          'x-requested-with': 'XMLHttpRequest',
+          'Authorization': 'Basic ' + btoa(user.username + ':' + user.password),
+        },
+      })
+      .then((data) => {
+        const pageData = (dataProcessor) ? dataProcessor(data) : data;
+        if (data.isLast === false) {
+          allPagedData = [
+            ...allPagedData,
+            ...pageData,
+          ];
+
+          const newStartPage = data.startAt + data.maxResults;
+          ajaxCall(newStartPage);
+        }else {
+          if (!allPagedData.length) {
+            allPagedData = pageData;
+          }else {
+            allPagedData = [
+              ...allPagedData,
+              ...pageData,
+            ];
+          }
+          if (sideEffectSuccess) {
+            sideEffectSuccess.call(this, store.dispatch);
+          }
+          console.log(allPagedData);
+          resolve(allPagedData);
+        }
+
+      }, (data, status, response) =>{
+        store.dispatch({
+          type: 'GROWLER__SHOW',
+          growler: {
+            text: response,
+            type: 'growler--error',
+          },
+        });
+        reject(response);
+      });
+
     }
-    return (dataProcessor) ? dataProcessor(data) : data;
-
-  }, (data, status, response) =>{
-    store.dispatch({
-      type: 'GROWLER__SHOW',
-      growler: {
-        text: response,
-        type: 'growler--error',
-      },
-    });
-
   });
+
 
 }
 
@@ -84,7 +114,7 @@ export default store => next => action => {
   if (typeof callAPI === 'undefined') {
     return next(action);
   }
-  console.log("tabrnak");
+
   let { endpoint } = callAPI;
   const { dataProcessor, types, callData, sideEffectSuccess, validate, method, postData } = callAPI;
 

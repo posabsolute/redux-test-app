@@ -25,22 +25,19 @@ const mapDispatchToProps = dispatch => {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class IssueContainer extends React.Component {
   componentWillMount() {
+    this.props.hideBottomBar();
     this.loadIssue();
+    this.props.pageBack(true);
+  }
+
+  componentWillUnmount() {
+    this.props.clearIssue();
   }
 
   loadIssue() {
     this.props.fetchIssue(this.props.params.id).then(()=>{
-      this.props.updatePageTitle(this.props.issue.key, this.props.issue.key);
+      this.props.updatePageTitle(this.props.issue.key, this.props.issue.key, this.props.routing.path);
     });
-  }
-
-  componentWillUnmount(){
-    this.props.clearIssue();
-  }
-
-  reloadIssue() {
-    this.props.clearIssue();
-    this.loadIssue();
   }
 
   page() {
@@ -62,6 +59,9 @@ export default class IssueContainer extends React.Component {
 }
 
 IssueContainer.propTypes = {
+  routing: React.PropTypes.object,
+  hideBottomBar: React.PropTypes.func,
+  pageBack: React.PropTypes.func,
   clearIssue: React.PropTypes.func,
   fetchIssue: React.PropTypes.func,
   params: React.PropTypes.object,

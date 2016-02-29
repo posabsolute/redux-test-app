@@ -4,9 +4,7 @@ import apiMiddleware from '../middlewares/api';
 import {validateMiddleware} from 'redux-form-validator';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
-import ReduxLocalstorage from 'redux-simple-localstorage';
 
-const {read, write} = ReduxLocalstorage('appStore');
 const logger = createLogger({ collapsed: true });
 
 const createStoreWithMiddleware = compose(
@@ -14,6 +12,7 @@ const createStoreWithMiddleware = compose(
     thunkMiddleware,
     validateMiddleware,
     apiMiddleware,
+    logger,
   ),
   window.devToolsExtension ? window.devToolsExtension() : f => f
 )(createStore);

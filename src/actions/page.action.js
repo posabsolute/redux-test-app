@@ -1,11 +1,22 @@
-import {PAGE_CHANGE_TITLE} from './types/page.types';
+import {PAGE_CHANGE_TITLE, PAGE_BACK} from './types/page.types';
 
-// Fetches a single user from Github API.
-// Relies on the custom API middleware defined in ../middleware/api.js.
-export function updatePageTitle(title, titleSmall) {
+
+export function updatePageTitle(title, titleSmall, path) {
   return {
     type: PAGE_CHANGE_TITLE,
-    title,
-    titleSmall,
+    data: {
+      title,
+      path,
+      titleSmall,
+    },
+  };
+}
+
+export function pageBack(active) {
+  return {
+    type: PAGE_BACK,
+    data: {
+      back: active,
+    },
   };
 }

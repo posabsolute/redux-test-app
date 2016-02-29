@@ -4,6 +4,7 @@ import {SPRINTS_LIST_REQUEST, SPRINTS_LIST_FETCH, SPRINT_UPDATE_POINTS, SPRINTS_
        SPRINT_ISSUES_REQUEST, SPRINT_ISSUES_FETCH, SPRINT_ISSUES_FAILURE,
        BURNDOWN_REQUEST, BURNDOWN_FETCH, BURNDOWN_FETCH_FAILURE,
        VELOCITY_REQUEST, VELOCITY_FETCH, VELOCITY_FETCH_FAILURE,
+       SPRINT_CLEAR, SPRINTS_CLEAR,
        REPORT_REQUEST, REPORT_FETCH, REPORT_FETCH_FAILURE,
        SPRINT_REQUEST, SPRINT_FETCH, SPRINT_FAILURE} from './types/sprints.types';
 
@@ -41,8 +42,6 @@ export function fetchVelocity(id) {
   };
 }
 
-
-
 export function fetchSprintReport(id) {
   return {
     [CALL_API]: {
@@ -53,8 +52,17 @@ export function fetchSprintReport(id) {
   };
 }
 
+export function clearSprint() {
+  return {
+    type: SPRINT_CLEAR,
+  };
+}
 
-
+export function clearSprints() {
+  return {
+    type: SPRINTS_CLEAR,
+  };
+}
 
 export function fetchDevSprintWork(id) {
   return {

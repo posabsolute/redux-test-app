@@ -1,4 +1,4 @@
-const projectModel = {
+export default {
   data: {
     'name': {
       type: 'string',
@@ -15,7 +15,6 @@ const projectModel = {
     },
   },
   endpointCollection: () => '/rest/agile/1.0/board',
+  endpointConfig: (id) => `/rest/agile/1.0/board/${id}/configuration`,
   endpointCollectionProcessor: (resp) => resp.values,
 };
-
-export default projectModel;
