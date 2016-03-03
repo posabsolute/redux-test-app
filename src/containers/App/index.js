@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { updatePath } from 'redux-simple-router';
 import { bindActionCreators } from 'redux';
 import 'bootstrap-webpack';
+import 'react-fastclick';
 
 import {GrowlerContainer} from 'flash-notification-react-redux';
 import GrowlerMessages from 'locales/growler.locale.js';
@@ -38,7 +39,8 @@ const mapDispatchToProps = dispatch => {
       this.props.hideSidebar();
     },
     goBack() {
-      dispatch(updatePath(this.props.configs.pages.last.path));
+      const path = this.props.configs.pages.last.path || '/projects';
+      dispatch(updatePath(path));
     },
   };
 };
@@ -49,10 +51,21 @@ export class App extends Component {
     children: React.PropTypes.any,
   }
   componentWillMount() {
+    this.fetchProject();
+    this.setupNative();
+  }
+
+  setupNative() {}
+
+  fetchProject() {
     const project = this.props.configs.project;
     if (project.id) {
       this.props.selectProject(project);
-      this.props.fetchProjectConfig(project.id);
+      this.props.fetchProjectConfig(project.id).then((config) => {
+        if(config){
+          localStorage.setItem('board', JSON.stringify(config));
+        }
+      });
     }
   }
 
@@ -71,6 +84,9 @@ export class App extends Component {
     return (
       <section>
         <GrowlerContainer messages={GrowlerMessages} showFor={3000} currentLocale="enUS" />
+        { this.props.bottomBarStore.status === 'show' ?
+          <BottomBar page={this.props.params} show={this.props.bottomBarStore.show} buttons={this.props.bottomBarStore.buttons} onClick={this.props.redirectBottomBar} />
+          : null }
         <Header
           title={this.props.pageStore.titleSmall}
           menuLeftClick={this.props.showSidebar}
@@ -79,9 +95,6 @@ export class App extends Component {
         />
         <Sidebar {...this.props}/>
         <div className="container">{childrenWithProps}</div>
-        { this.props.bottomBarStore.status === 'show' ?
-          <BottomBar page={this.props.params} buttons={this.props.bottomBarStore.buttons} onClick={this.props.redirectBottomBar} />
-          : null }
       </section>
     );
   }

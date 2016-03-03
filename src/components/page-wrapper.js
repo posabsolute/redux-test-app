@@ -35,7 +35,6 @@ export default class PageWrapper extends React.Component {
     for (const key in obj) {
       if (this.hasOwnProperty.call(obj, key)) return false;
     }
-
     return true;
   }
 

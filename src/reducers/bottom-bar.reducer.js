@@ -2,7 +2,7 @@ import {BOTTOM_BAR__ACTIONS, BOTTOM_BAR__CLEAR} from '../actions/types/bottom-ba
 
 const initialState = {
   buttons: [],
-  status: 'show',
+  status: 'hide',
 };
 
 export function bottomBarReducer(state = initialState, action) {
@@ -16,14 +16,13 @@ export function bottomBarReducer(state = initialState, action) {
         return button;
       });
     }
-    console.log(buttons)
     return {
       buttons,
       status: 'show',
     };
 
   case BOTTOM_BAR__CLEAR:
-    return initialState;
+    return {...initialState};
 
   default:
     return state;

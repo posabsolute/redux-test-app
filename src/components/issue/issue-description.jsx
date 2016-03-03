@@ -4,5 +4,5 @@ import marked from 'marked';
 import 'style!./description.scss';
 
 export default ({description}) => (
-	<div className="issue__description" dangerouslySetInnerHTML={{__html: marked(description)}}></div>
+	<div className="issue__description" dangerouslySetInnerHTML={{__html: marked(description || 'No description')}}></div>
 );

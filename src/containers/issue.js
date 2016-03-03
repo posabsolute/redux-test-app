@@ -8,6 +8,7 @@ import * as issueActions from 'actions/issue.action';
 import CommentsComponent from 'components/comments/comments';
 import AddCommentForm from 'components/comments/add-comment.js';
 import IssueStatus from 'components/issue/issue-status';
+import Attachment from 'components/issue/attachment';
 import IssueDescription from 'components/issue/issue-description';
 import PageWrapper from 'components/page-wrapper';
 
@@ -25,7 +26,6 @@ const mapDispatchToProps = dispatch => {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class IssueContainer extends React.Component {
   componentWillMount() {
-    this.props.hideBottomBar();
     this.loadIssue();
     this.props.pageBack(true);
   }
@@ -45,6 +45,7 @@ export default class IssueContainer extends React.Component {
       <section className="row">
         <IssueStatus {...this.props.issue} />
         <IssueDescription description={this.props.issue.description} />
+        { this.props.issue.attachment.length ? <Attachment attachment={this.props.issue.attachment} /> : null }
         <CommentsComponent comments={this.props.issue.comment.comments} />
         <AddCommentForm {...this.props} />
       </section>

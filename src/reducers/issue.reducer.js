@@ -2,9 +2,12 @@ import { ISSUE_FETCH, ISSUE_CLEAR } from 'actions/types/issue.types';
 
 const initialState = {
   priority: {},
-  assignee: {},
+  assignee: {
+    displayName: 'Unassigned',
+  },
   description: '',
   resolution: {},
+  attachment: [],
   closedSprints: [{}],
   comment: {
     comments: [],

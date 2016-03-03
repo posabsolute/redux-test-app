@@ -8,6 +8,7 @@ import * as pageActions from 'actions/page.action';
 
 const mapStateToProps = state => ({
   sprint: state.sprint,
+  configs: state.configs,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -20,17 +21,17 @@ const mapDispatchToProps = dispatch => {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SprintsListContainer extends React.Component {
   componentWillMount() {
+    const projectId = this.props.configs.project.id;
     this.props.pageBack(false);
     this.props.fetchSprint(this.props.params.id);
-    this.props.fetchBurndown(this.props.params.id);
-    this.props.fetchSprintReport(this.props.params.id);
-
-    this.props.fetchSprintIssues(this.props.params.id).then(() =>{
+    this.props.fetchBurndown(this.props.params.id, projectId);
+    this.props.fetchSprintReport(this.props.params.id, projectId).then(() => {
       this.props.updatePageTitle(this.props.sprint.name, this.props.sprint.name, this.props.routing.path);
     });
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
+    this.props.hideBottomBar();
     this.props.clearSprint();
   }
 
@@ -49,6 +50,8 @@ export default class SprintsListContainer extends React.Component {
 
 SprintsListContainer.propTypes = {
   fetchSprintReport: React.PropTypes.func,
+  routing: React.PropTypes.object,
+  configs: React.PropTypes.object,
   pageBack: React.PropTypes.func,
   sprints: React.PropTypes.array,
   stories: React.PropTypes.array,

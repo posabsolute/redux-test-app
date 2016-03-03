@@ -29,7 +29,6 @@ const mapDispatchToProps = dispatch => {
     },
     searchIssues(query) {
       if (query) {
-        console.log(this)
         this.fetchSearch(query);
       }
     },
@@ -45,7 +44,6 @@ const mapDispatchToProps = dispatch => {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class IssueSearchContainer extends React.Component {
   componentWillMount() {
-    this.props.hideBottomBar();
     this.props.pageBack(false);
     const query = this.props.params.query;
     this.props.updatePageTitle('Search', 'Search', this.props.routing.path);

@@ -1,10 +1,11 @@
 import { SPRINTS_LIST_FETCH, SPRINT_ISSUES_FETCH, SPRINT_UPDATE_POINTS, SPRINTS_CLEAR } from 'actions/types/sprints.types';
+import Intl from 'intl';
+import Locale from 'intl/locale-data/jsonp/en.js';
 
 export function sprints(state = [], action) {
   switch (action.type) {
 
   case SPRINTS_LIST_FETCH:
-
     const sprintsList = action.data.map((sprint) => {
       const longOptions = { year: 'numeric', month: 'long', day: 'numeric' };
       const smallOptions = { month: 'long', day: 'numeric' };
@@ -15,7 +16,7 @@ export function sprints(state = [], action) {
       return sprint;
     });
 
-    return sprintsList;
+    return [...sprintsList];
 
   case SPRINT_ISSUES_FETCH:
     return state.map( sprint => {

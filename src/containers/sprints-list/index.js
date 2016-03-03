@@ -19,13 +19,15 @@ const mapDispatchToProps = dispatch => {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SprintsListContainer extends React.Component {
   componentWillMount() {
+    const projectId = this.props.params.id;
     this.props.pageBack(false);
-    this.props.fetchSprints(this.props.params.id);
-    this.props.fetchVelocity();
+    this.props.fetchSprints(projectId);
+    this.props.fetchVelocity(projectId);
     this.props.updatePageTitle('Your Sprints', 'Sprints', this.props.routing.path);
   }
 
   componentWillUnmount() {
+    this.props.hideBottomBar();
     this.props.clearSprints();
   }
 

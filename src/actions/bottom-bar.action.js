@@ -12,8 +12,6 @@ export function showBottomBar(actions) {
 
 
 export function redirectBottomBar(button, page) {
-  console.log(button);
-  console.log(page);
   return dispatch => {
     return dispatch(updatePath(button.link(page.id)));
   };

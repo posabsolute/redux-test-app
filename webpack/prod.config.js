@@ -5,15 +5,14 @@ var autoprefixer = require('autoprefixer');
 var csswring = require('csswring');
 
 module.exports = {
-  devtool: 'source-map',
   entry: [
     './src/index',
   ],
-
+   cache:false,
   output: {
     filename: 'bundle.js',
-    path: path.join(__dirname, '../dist/'),
-    publicPath: 'dist/',
+    path: path.join(__dirname, '../dist'),
+    publicPath: '',
   },
 
   plugins: [
@@ -26,11 +25,6 @@ module.exports = {
     new ExtractTextPlugin('bundle.css'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
-    }),
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
     }),
@@ -45,6 +39,14 @@ module.exports = {
     loaders: [{
       test: /bootstrap\/js\//,
       loader: 'imports?jQuery=jquery',
+    }, {
+      test:[/\.jsx$/,  /\.js$/],
+      loaders: ['react-hot', 'babel?stage=0&loose[]=es6.modules'],
+      include: [
+        path.resolve(__dirname, "../src"),
+        path.resolve(__dirname, "../node_modules/flash-notification-react-redux"),
+        path.resolve(__dirname, "../node_modules/redux-form-validator"),
+      ],
     }, {
       test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
       loader: 'url?limit=10000&mimetype=application/font-woff',
@@ -64,12 +66,8 @@ module.exports = {
       test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
       loader: 'url?limit=10000&mimetype=image/svg+xml',
     }, {
-      test: /\.js$/,
-      loaders: ['react-hot', 'babel?stage=0&loose[]=es6.modules'],
-      exclude: /node_modules/,
-    }, {
-      test: /\.scss$/,
-      loader: 'css!postcss-loader!sass',
+      test: [/\.scss$/, /\.css$/],
+      loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader"),
     }, {
       test: /\.png$/,
       loader: 'file?name=[name].[ext]',

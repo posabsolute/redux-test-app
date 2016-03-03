@@ -29,7 +29,7 @@ export default class SprintsListContainer extends React.Component {
   page() {
     return (
       <section className="row">
-        <HeaderSection title={"Your Sprints"} background={"/images/img2.jpg"} />
+        <HeaderSection title={"Your Sprints"} background={"images/img2.jpg"} />
         <List
           items={this.props.sprintsByDate}
           onClick={this.props.loadSprint}
@@ -40,7 +40,7 @@ export default class SprintsListContainer extends React.Component {
 
   render() {
     return (
-      <PageWrapper state={this.props.sprintsByDate} wrap={this.page()} />
+      <PageWrapper state={this.props.sprints} wrap={this.page()} />
     );
   }
 }

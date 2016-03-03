@@ -25,14 +25,13 @@ const mapDispatchToProps = dispatch => {
 export default class ProjectListContainer extends React.Component {
   componentWillMount() {
     this.props.pageBack(false);
-    this.props.hideBottomBar();
     this.props.fetchProjects();
     this.props.updatePageTitle('Your Projectss', 'Projects', this.props.routing.path);
   }
   page() {
     return (
       <section className="row">
-        <HeaderSection title={"Project List"} background={"/images/pjbg.jpg"} />
+        <HeaderSection title={"Project List"} background={"images/pjbg.jpg"} />
         <List
           items={this.props.projects}
           onClick={this.props.loadSprints.bind(this)}

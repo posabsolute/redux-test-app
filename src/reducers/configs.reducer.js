@@ -2,6 +2,7 @@ import { PAGE_CHANGE_TITLE } from 'actions/types/page.types';
 import { PROJECT_SELECTED, PROJECT_CONFIG_FETCH } from 'actions/types/projects.types';
 
 const projectStore = localStorage.getItem('project') && JSON.parse(localStorage.getItem('project'));
+const boardStore = localStorage.getItem('board') && JSON.parse(localStorage.getItem('board'));
 
 const initialState = {
   pages: {

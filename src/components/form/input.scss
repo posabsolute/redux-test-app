@@ -12,8 +12,17 @@
 	border:none;
 	border-left: 1px solid #ddd;
 }
+input[type="text"] {
+	-webkit-appearance:none;
+	appearance: none;
+	border-radius:none;
+}
 
-.btn-full{
+input[type="text"]:focus {
+  outline: none;
+}
+
+.btn.btn-full{
 	width:100%;
 	border-radius:0px;
 	font-size:16px;

@@ -21,11 +21,11 @@ export function fetchSprints(projectId) {
 }
 
 
-export function fetchBurndown(id) {
+export function fetchBurndown(id, projectId) {
   return {
     [CALL_API]: {
       types: [ BURNDOWN_REQUEST, BURNDOWN_FETCH, BURNDOWN_FETCH_FAILURE ],
-      endpoint: sprintModel.endpointBurndown(id),
+      endpoint: sprintModel.endpointBurndown(id, projectId),
       dataProcessor: sprintModel.endpointProcessor,
       model: sprintModel,
     },
@@ -42,11 +42,11 @@ export function fetchVelocity(id) {
   };
 }
 
-export function fetchSprintReport(id) {
+export function fetchSprintReport(id, projectId) {
   return {
     [CALL_API]: {
       types: [ REPORT_REQUEST, REPORT_FETCH, REPORT_FETCH_FAILURE ],
-      endpoint: sprintModel.endpointReport(id),
+      endpoint: sprintModel.endpointReport(id, projectId),
       model: sprintModel,
     },
   };

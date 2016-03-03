@@ -10,11 +10,10 @@ export default ({user, validate, onSubmit, redirect}) => (
     <div cassName="col-sm-6 col-lg-12">
       <div className="login-title">Release notes</div>
       <div className="login-icon-container">
-        <img className="login-icon" src="/images/logo-login.svg"/>
+        <img className="login-icon" src="images/logo-login.svg"/>
       </div>
     </div>
   </div>
-
   <div className=" login-page">
     <div className="container">
       <div className="row">

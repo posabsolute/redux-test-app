@@ -12,7 +12,6 @@ const createStoreWithMiddleware = compose(
     thunkMiddleware,
     validateMiddleware,
     apiMiddleware,
-    logger,
   ),
   window.devToolsExtension ? window.devToolsExtension() : f => f
 )(createStore);

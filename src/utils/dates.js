@@ -1,3 +1,6 @@
+import Intl from 'intl';
+import Locale from 'intl/locale-data/jsonp/en.js';
+
 export function getFormatDate(completedDate, notext = false) {
    const longOptions = { year: 'numeric', month: 'long', day: 'numeric' };
    const date1 = completedDate ? new Intl.DateTimeFormat('en-US', longOptions).format(new Date(completedDate)) : '';

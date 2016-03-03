@@ -11,7 +11,6 @@ const mapStateToProps = (state) => {
 @connect(mapStateToProps, null)
 export default class LoginComponent extends React.Component {
   componentWillMount(){
-  	this.props.hideBottomBar();
   }
   
   render() {

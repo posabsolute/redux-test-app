@@ -10,6 +10,7 @@
 	display:block;
 	background-color: #fff;
 	transition:opacity 0.3s, margin-left 0.3s;
+	 -webkit-transform: translateZ(0);
 }
 
 	.sidebar--show{

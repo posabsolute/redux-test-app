@@ -13,11 +13,11 @@ export default (props) => (
 
     <div className="list-data__row">
       <ListItem label="Priority" text={props.priority.name} />
-      <ListItem label="Resolution" text={props.assignee.displayName} />
+      <ListItem label="Resolution" text={props.resolution.name} />
     </div>
 
     <div className="list-data__row">
-      <ListItem label="Assignee" text={props.priority.name} />
+      <ListItem label="Assignee" text={ props.assignee ? props.assignee.displayName : 'Unassigned'} />
       <ListItem label="Story Points" text={props.customfield_10004} />
     </div>
 

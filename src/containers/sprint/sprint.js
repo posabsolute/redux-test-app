@@ -39,7 +39,7 @@ export default class SprintsListContainer extends React.Component {
     if (this.props.sprint.allIssuesEstimateSum) {
       return (
         <div>
-          <span className='header-section__small_text'>Story Points: {this.props.sprint.allIssuesEstimateSum.text}</span>
+          <span className="header-section__small_text">Story Points: {this.props.sprint.allIssuesEstimateSum.text}</span>
           <span className="ion-ios-arrow-thin-right header-section__arrow"></span>
           {this.props.sprint.completedIssuesEstimateSum.text}
         </div>
@@ -51,19 +51,18 @@ export default class SprintsListContainer extends React.Component {
   page() {
     return (
       <section className="row">
-        <HeaderSection title={this.props.sprint.name} background={"/images/img3.jpg"} subtitle={this.getSubtitle()} />
+        <HeaderSection title={this.props.sprint.name} background={"images/img3.jpg"} subtitle={this.getSubtitle()} />
         { this.props.stories.length ?
           (<List
             title="Stories"
             items={this.props.stories}
-            descMod={getFormatDate}
             floatingLabelMod= {(points) => `${points} points`}
             onClick={this.props.loadIssue}
             map={{
-              title: ['fields', 'summary'],
-              desc: ['fields', 'resolutiondate'],
-              labels: ['fields', 'issuetype', 'name'],
-              floatingLabel: ['fields', 'customfield_10004'],
+              title: ['summary'],
+              desc: ['statusName'],
+              labels: ['typeName'],
+              floatingLabel: ['currentEstimateStatistic', 'statFieldValue', 'value'],
             }} />)
           : null
         }
@@ -71,13 +70,12 @@ export default class SprintsListContainer extends React.Component {
           <List
             title="Other Issues"
             items={this.props.otherIssues}
-            descMod={getFormatDate}
             onClick={this.props.loadIssue}
             map={{
-              title: ['fields', 'summary'],
-              desc: ['fields', 'resolutiondate'],
-              labels: ['fields', 'issuetype', 'name'],
-              floatingLabel: ['fields', 'customfield_10004'],
+              title: ['summary'],
+              desc: ['statusName'],
+              labels: ['typeName'],
+              floatingLabel: ['currentEstimateStatistic', 'statFieldValue', 'value'],
             }} />
           : null
         }

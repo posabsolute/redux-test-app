@@ -9,7 +9,7 @@ export default class ListContainer extends React.Component {
 
     if (typeof element === 'object') {
       let content = item;
-      element.map(field => content = content[field]);
+      element.map(field => content = content ? content[field] : '');
       return !modifier ? content : modifier(content);
     }
   }
