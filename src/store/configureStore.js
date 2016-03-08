@@ -4,14 +4,18 @@ import apiMiddleware from '../middlewares/api';
 import {validateMiddleware} from 'redux-form-validator';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
+import { routerMiddleware } from 'react-router-redux';
+import { hashHistory } from 'react-router';
 
 const logger = createLogger({ collapsed: true });
+const router = routerMiddleware(hashHistory);
 
 const createStoreWithMiddleware = compose(
   applyMiddleware(
     thunkMiddleware,
     validateMiddleware,
     apiMiddleware,
+    router,
   ),
   window.devToolsExtension ? window.devToolsExtension() : f => f
 )(createStore);

@@ -19,9 +19,19 @@ import Issue from 'containers/issue.js';
 import SearchIssue from 'containers/search.js';
 
 
+function verifyAuth(nextState, replace) {
+  if (localStorage.getItem('password')) {
+    replace({
+      pathname: '/projects',
+      state: { nextPathname: nextState.location.pathname },
+    });
+  }
+}
+
+
 export default (
   <Route path="/" component={App}>
-    <Route path="login" component={Login} />
+    <Route path="login" component={Login} onEnter={verifyAuth} />
     <Route path="projects" component={ProjectList} title="Your Projects" titleSmall="Projects" />
 
     <Route path="projects/:id/sprints" component={SprintsContainer}>

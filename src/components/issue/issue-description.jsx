@@ -1,8 +1,11 @@
 import React from 'react';
-import marked from 'marked';
+import ReactMarkdown from 'react-markdown';
 
 import 'style!./description.scss';
 
 export default ({description}) => (
-	<div className="issue__description" dangerouslySetInnerHTML={{__html: marked(description || 'No description')}}></div>
+	<div className="issue__description">
+		<ReactMarkdown source={description || 'No Description'} />
+	</div>
 );
+

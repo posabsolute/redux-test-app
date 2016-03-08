@@ -48,6 +48,9 @@ module.exports = {
         path.resolve(__dirname, "../node_modules/redux-form-validator"),
       ],
     }, {
+      test: /\.json$/,
+      loader: 'json',
+    }, {
       test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
       loader: 'url?limit=10000&mimetype=application/font-woff',
     }, {

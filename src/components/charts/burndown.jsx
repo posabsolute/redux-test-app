@@ -12,9 +12,9 @@ export default class BurndownComponent extends React.Component {
   }
 
   getIdealBurn() {
-    const idealValue = this.props.dataset[0] / this.props.dataset.length;
+    const idealValue = this.props.dataset[0] / (this.props.dataset.length - 1);
     const burn = this.props.dataset.map((data, index) => {
-      const step = this.props.dataset.length - index;
+      const step = this.props.dataset.length - (index + 1);
       return idealValue * step;
     });
     return burn;

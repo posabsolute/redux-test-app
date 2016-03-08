@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {validateProps} from 'redux-form-validator';
 import {validateActions} from 'redux-form-validator';
-import { updatePath } from 'redux-simple-router';
+import { push } from 'react-router-redux';
 
 import LoginForm from './login.jsx';
 import { login } from 'actions/user.action';
@@ -37,7 +37,7 @@ const mapDispatchToProps = (
           localStorage.setItem('emailAddress', action.data.emailAddress);
           localStorage.setItem('avatarUrls', action.data.avatarUrls['48x48']);
           localStorage.setItem('url', form.url.value);
-          dispatch(updatePath(redirect));
+          dispatch(push(redirect));
         });
       }
     },

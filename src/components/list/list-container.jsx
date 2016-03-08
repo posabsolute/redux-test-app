@@ -4,13 +4,13 @@ import ListItem from 'components/list/list-item';
 export default class ListContainer extends React.Component {
   getString(element, modifier, item) {
     if (typeof element === 'string') {
-      return !modifier ? item[element] : modifier(item[element]);
+      return !modifier ? item[element] : modifier(item[element], item);
     }
 
     if (typeof element === 'object') {
       let content = item;
       element.map(field => content = content ? content[field] : '');
-      return !modifier ? content : modifier(content);
+      return !modifier ? content : modifier(content, item);
     }
   }
 
@@ -20,16 +20,16 @@ export default class ListContainer extends React.Component {
       <div className="list-item_container col-lg-12">
         { title ? <div className="list-title">{title}</div> : null }
         {items.map((item, index) =>
-          <ListItem
-            index={index}
-            key={'list' + index}
-            onClick={onClick.bind(null, item)}
-            title={this.getString(map.title, titleMod, item)}
-            floatingLabel={this.getString(map.floatingLabel, floatingLabelMod, item)}
-            labels={this.getString(map.labels, labelsMod, item)}
-            desc={this.getString(map.desc, descMod, item)}
-            listItem={item}
-          />
+            <ListItem
+              index={index}
+              key={'list' + index}
+              onClick={onClick.bind(null, item)}
+              title={this.getString(map.title, titleMod, item)}
+              floatingLabel={this.getString(map.floatingLabel, floatingLabelMod, item)}
+              labels={this.getString(map.labels, labelsMod, item)}
+              desc={this.getString(map.desc, descMod, item)}
+              listItem={item}
+            />
         )}
       </div>
     );

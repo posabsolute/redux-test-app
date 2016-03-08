@@ -1,46 +1,47 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updatePath } from 'redux-simple-router';
+import { push, routerActions } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import 'bootstrap-webpack';
-import 'react-fastclick';
+//import 'react-fastclick';
 
 import {GrowlerContainer} from 'flash-notification-react-redux';
 import GrowlerMessages from 'locales/growler.locale.js';
 import Header from 'components/header/header.jsx';
 import Sidebar from 'components/sidebar/sidebar.js';
-import BottomBar from 'components/bottombar/bottom-bar.jsx';
 
 import * as sidebarActions from 'actions/sidebar.action';
 import * as projectActions from 'actions/projects.action';
-import * as bottomBarActions from 'actions/bottom-bar.action';
 import * as pageActions from 'actions/page.action';
+
+
+function onDeviceReady() {
+  window.open = window.cordova.InAppBrowser.open;
+}
+document.addEventListener('deviceready', onDeviceReady, false);
+
 
 /* global styles for app */
 import 'style!./styles/app.scss';
 const mapStateToProps = (state) => {
   return {
     pageStore: state.page,
-    bottomBarStore: state.bottomBar,
-    routing: state.routing,
-    userStore: state.user,
     configs: state.configs,
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    ...bindActionCreators(bottomBarActions, dispatch),
     ...bindActionCreators(sidebarActions, dispatch),
     ...bindActionCreators(projectActions, dispatch),
     ...bindActionCreators(pageActions, dispatch),
+    ...bindActionCreators(routerActions, dispatch),
     logout() {
-      dispatch(updatePath(`/login`));
+      dispatch(push(`/login`));
       this.props.clearProjects();
       this.props.hideSidebar();
     },
     goBack() {
-      const path = this.props.configs.pages.last.path || '/projects';
-      dispatch(updatePath(path));
+      this.props.go(-1);
     },
   };
 };
@@ -55,14 +56,15 @@ export class App extends Component {
     this.setupNative();
   }
 
-  setupNative() {}
+  setupNative() {
+  }
 
   fetchProject() {
     const project = this.props.configs.project;
     if (project.id) {
       this.props.selectProject(project);
       this.props.fetchProjectConfig(project.id).then((config) => {
-        if(config){
+        if (config) {
           localStorage.setItem('board', JSON.stringify(config));
         }
       });
@@ -70,23 +72,9 @@ export class App extends Component {
   }
 
   render() {
-    const childrenWithProps = React.Children.map(this.props.children, (child) => {
-      return React.cloneElement(child, {
-        hideSidebar: this.props.hideSidebar,
-        showSidebar: this.props.showSidebar,
-        routing: this.props.routing,
-        configs: this.props.configs,
-        hideBottomBar: this.props.hideBottomBar,
-        showSprintBottomBar: this.props.showSprintBottomBar,
-        showSprintsListBottomBar: this.props.showSprintsListBottomBar,
-      });
-    });
     return (
       <section>
         <GrowlerContainer messages={GrowlerMessages} showFor={3000} currentLocale="enUS" />
-        { this.props.bottomBarStore.status === 'show' ?
-          <BottomBar page={this.props.params} show={this.props.bottomBarStore.show} buttons={this.props.bottomBarStore.buttons} onClick={this.props.redirectBottomBar} />
-          : null }
         <Header
           title={this.props.pageStore.titleSmall}
           menuLeftClick={this.props.showSidebar}
@@ -94,14 +82,13 @@ export class App extends Component {
           back={this.props.pageStore.back}
         />
         <Sidebar {...this.props}/>
-        <div className="container">{childrenWithProps}</div>
+        <div className="container">{this.props.children}</div>
       </section>
     );
   }
 }
 
 App.propTypes = {
-  bottomBarStore: React.PropTypes.object,
   routing: React.PropTypes.object,
   configs: React.PropTypes.object,
   pageStore: React.PropTypes.object,
@@ -116,6 +103,5 @@ App.propTypes = {
   showSprintsListBottomBar: React.PropTypes.func,
   params: React.PropTypes.object,
   hideSidebar: React.PropTypes.func,
-  userStore: React.PropTypes.object,
   sidebarStore: React.PropTypes.object,
 };

@@ -46,13 +46,3 @@ export default ({status, user, hideSidebar, logout, loadSprints, loadProjects, c
     </section>
   );
 };
-
-/*
-        {list.map((elem, index) => {
-          return (
-            <div className="sidebar_list sidebar_list_indented" key={'sidebar_item_' + index} onClick={listClick.bind(this, elem, hideSidebar)}>
-              {elem.name}
-            </div>
-          );
-        })}
- */

@@ -4,15 +4,21 @@ import { connect } from 'react-redux';
 
 import * as sprintActions from 'actions/sprints.action';
 import * as pageActions from 'actions/page.action';
+import * as bottomBarActions from 'actions/bottom-bar.action';
+
+import BottomBar from 'components/bottombar/bottom-bar.jsx';
 
 const mapStateToProps = state => ({
   sprints: state.sprints,
+  routing: state.routing,
+  bottomBarStore: state.bottomBar,
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     ...bindActionCreators(sprintActions, dispatch),
     ...bindActionCreators(pageActions, dispatch),
+    ...bindActionCreators(bottomBarActions, dispatch),
   };
 };
 
@@ -32,30 +38,27 @@ export default class SprintsListContainer extends React.Component {
   }
 
   render() {
-    const childrenWithProps = React.Children.map(this.props.children, (child) => {
-      return React.cloneElement(child, {
-        hideSidebar: this.props.hideSidebar,
-        showSidebar: this.props.showSidebar,
-        hideBottomBar: this.props.hideBottomBar,
-        showSprintsListBottomBar: this.props.showSprintsListBottomBar,
-      });
-    });
-    return (<div>{childrenWithProps}</div>);
+    return (
+      <div>
+        {this.props.children}
+        <BottomBar page={this.props.params} show={this.props.bottomBarStore.show} buttons={this.props.bottomBarStore.buttons} onClick={this.props.redirectBottomBar} />
+      </div>
+    );
   }
 }
 
 SprintsListContainer.propTypes = {
+  children: React.PropTypes.any,
   fetchSprints: React.PropTypes.func,
   fetchVelocity: React.PropTypes.func,
   pageBack: React.PropTypes.func,
   showSprintsListBottomBar: React.PropTypes.func,
   sprintsByDate: React.PropTypes.object,
+  bottomBarStore: React.PropTypes.object,
   routing: React.PropTypes.object,
   loadSprints: React.PropTypes.func,
   clearSprints: React.PropTypes.func,
   updatePageTitle: React.PropTypes.func,
   params: React.PropTypes.object,
-  showSidebar: React.PropTypes.func,
   hideBottomBar: React.PropTypes.func,
-  hideSidebar: React.PropTypes.func,
 };

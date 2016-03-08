@@ -12,7 +12,7 @@ export default ({validate, classes, name, defaultValue, value, errorLabel, place
 
   return (
     <div className="form-group">
-      <input type={type} className={cssClasses} defaultValue={defaultValue} value={value} name={name} placeholder={placeholder} {...validateProps} />
+      <input type={type} autoCapitalize="off" autoCorrect="off" className={cssClasses} defaultValue={defaultValue} value={value} name={name} placeholder={placeholder} {...validateProps} />
       {Label}
     </div>
   );

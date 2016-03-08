@@ -11,7 +11,9 @@ const initialState = {
     last5: [],
   },
   project: projectStore || {},
-  board: {},
+  board: {
+    estimation: {field:{}},
+  },
 };
 
 export function configs(state = initialState, action) {

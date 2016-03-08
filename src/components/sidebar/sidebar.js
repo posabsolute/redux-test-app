@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updatePath } from 'redux-simple-router';
+import { push } from 'react-router-redux';
 
 import SidebarComponent from './sidebar.jsx';
 
@@ -21,7 +21,7 @@ const mapDispatchToProps = (
   return {
     ...bindActionCreators(sidebarActions, dispatch),
     redirect(link) {
-      dispatch(updatePath(link));
+      dispatch(push(link));
     },
     loadSprints() {
       this.props.redirect(`/projects/${this.props.configs.project.id}/sprints/index`);
@@ -34,7 +34,7 @@ const mapDispatchToProps = (
     onSubmit(evt) {
       const searchValue = evt.target.elements[0].value;
       this.props.hideSidebar();
-      dispatch(updatePath(`/search/issues/${searchValue}`));
+      dispatch(push(`/search/issues/${searchValue}`));
     },
   };
 };

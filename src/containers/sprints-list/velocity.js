@@ -1,8 +1,11 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import PageWrapper from 'components/page-wrapper';
 import Velocity from 'components/charts/velocity';
+
+import * as bottomBarActions from 'actions/bottom-bar.action';
 
 import {sprintsVelocitySelector} from 'selectors/velocity.selector';
 
@@ -13,7 +16,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    ...bindActionCreators(bottomBarActions, dispatch),
+  };
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -30,7 +35,7 @@ export default class SprintsListContainer extends React.Component {
   }
   render() {
     return (
-      <PageWrapper state={this.props.formattedVelocity} wrap={this.page()} />
+      <PageWrapper state={this.props.formattedVelocity} wrap={this.page.bind(this)} />
     );
   }
 }

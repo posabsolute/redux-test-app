@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { routeReducer } from 'redux-simple-router';
+import { routerReducer } from 'react-router-redux';
 import { user } from './user.reducer';
 import { GrowlerReducer } from 'flash-notification-react-redux';
 import { projects } from './projects.reducer';
@@ -17,7 +17,7 @@ import { validateReducer } from 'redux-form-validator';
 import { PageReducer } from './page.reducer';
 
 const rootReducer = combineReducers({
-  routing: routeReducer,
+  routing: routerReducer,
   page: PageReducer,
   growler: GrowlerReducer,
   sidebar: sidebarReducer,

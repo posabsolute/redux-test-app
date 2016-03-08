@@ -5,6 +5,7 @@ const initialState = {
   assignee: {
     displayName: 'Unassigned',
   },
+  status:{},
   description: '',
   resolution: {},
   attachment: [],

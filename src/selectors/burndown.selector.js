@@ -53,7 +53,6 @@ function getValuesPerDay(issues) {
       }
 
       if (isDone(issuesListScope) && !isDone(currentScope)) {
-        console.log(issueValue);
         fullValue = fullValue + issueValue;
       }
 
@@ -99,9 +98,10 @@ function getValuesPerDay(issues) {
         ...currentScope,
       };
     });
+    fullValue = fullValue < 0 ? 0 : fullValue;
     valuesByDay.push(fullValue);
   });
-
+  console.log(valuesByDay);
   return valuesByDay;
 }
 

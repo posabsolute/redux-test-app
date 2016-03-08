@@ -10,7 +10,6 @@ export function issues(state = initialState, action) {
       ...action.data,
     ];
 
-
   case SEARCH_CLEAR:
     return initialState;
 

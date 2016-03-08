@@ -14,6 +14,8 @@ import PageWrapper from 'components/page-wrapper';
 
 const mapStateToProps = state => ({
   issue: state.issue,
+  configs: state.configs,
+  routing: state.routing,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -26,24 +28,25 @@ const mapDispatchToProps = dispatch => {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class IssueContainer extends React.Component {
   componentWillMount() {
-    this.loadIssue();
     this.props.pageBack(true);
+    this.props.fetchIssue(this.props.params.id).then((item)=>{
+      this.props.updatePageTitle(this.props.issue.key, this.props.issue.key, this.props.routing.path);
+    });
   }
 
   componentWillUnmount() {
     this.props.clearIssue();
   }
 
-  loadIssue() {
-    this.props.fetchIssue(this.props.params.id).then(()=>{
-      this.props.updatePageTitle(this.props.issue.key, this.props.issue.key, this.props.routing.path);
-    });
+  componentDidmount() {
+    window.scrollTo(0, 0);
   }
 
   page() {
+    console.log(this.props.issue.project);
     return (
       <section className="row">
-        <IssueStatus {...this.props.issue} />
+        <IssueStatus {...this.props.issue} pointField={this.props.configs.board.estimation.field.fieldId} />
         <IssueDescription description={this.props.issue.description} />
         { this.props.issue.attachment.length ? <Attachment attachment={this.props.issue.attachment} /> : null }
         <CommentsComponent comments={this.props.issue.comment.comments} />
@@ -53,13 +56,15 @@ export default class IssueContainer extends React.Component {
   }
 
   render() {
+    console.log(this.props.issue);
     return (
-      <PageWrapper state={this.props.issue.key} wrap={this.page()} />
+      <PageWrapper state={this.props.issue.status} wrap={this.page.bind(this)} />
     );
   }
 }
 
 IssueContainer.propTypes = {
+  configs: React.PropTypes.object,
   routing: React.PropTypes.object,
   hideBottomBar: React.PropTypes.func,
   pageBack: React.PropTypes.func,

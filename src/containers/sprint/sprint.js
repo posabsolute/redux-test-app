@@ -1,6 +1,6 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
-import { updatePath } from 'redux-simple-router';
+import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 
 import List from 'components/list/list-container';
@@ -9,9 +9,9 @@ import PageWrapper from 'components/page-wrapper';
 
 import * as actions from 'actions/sprints.action';
 import * as pageActions from 'actions/page.action';
-import {issuesListSelector} from 'selectors/issues.selector';
+import * as bottomBarActions from 'actions/bottom-bar.action';
 
-import {getFormatDate} from 'utils/dates';
+import {issuesListSelector} from 'selectors/issues.selector';
 
 const mapStateToProps = state => ({
   sprint: state.sprint,
@@ -21,16 +21,17 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
+    ...bindActionCreators(bottomBarActions, dispatch),
     ...bindActionCreators(actions, dispatch),
     ...bindActionCreators(pageActions, dispatch),
     loadIssue: (issue) => {
-      dispatch(updatePath(`/issue/${issue.id}`));
+      dispatch(push(`/issue/${issue.id}`));
     },
   };
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class SprintsListContainer extends React.Component {
+export default class SprintContainer extends React.Component {
   componentWillMount() {
     this.props.showSprintBottomBar(1);
   }
@@ -75,7 +76,7 @@ export default class SprintsListContainer extends React.Component {
               title: ['summary'],
               desc: ['statusName'],
               labels: ['typeName'],
-              floatingLabel: ['currentEstimateStatistic', 'statFieldValue', 'value'],
+              floatingLabel: ['priorityName'],
             }} />
           : null
         }
@@ -85,12 +86,12 @@ export default class SprintsListContainer extends React.Component {
 
   render() {
     return (
-      <PageWrapper state={this.props.sprint.state} wrap={this.page()} />
+      <PageWrapper state={this.props.sprint.state} wrap={this.page.bind(this)} />
     );
   }
 }
 
-SprintsListContainer.propTypes = {
+SprintContainer.propTypes = {
   otherIssues: React.PropTypes.array,
   sprints: React.PropTypes.array,
   stories: React.PropTypes.array,

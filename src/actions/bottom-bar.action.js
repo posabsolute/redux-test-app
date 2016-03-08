@@ -1,6 +1,6 @@
 import {BOTTOM_BAR__ACTIONS, BOTTOM_BAR__CLEAR} from './types/bottom-bar.types';
 import {sprintButtons, sprintsListButtons} from './configs/bottom-bar.configs';
-import { updatePath } from 'redux-simple-router';
+import { push } from 'react-router-redux';
 
 
 export function showBottomBar(actions) {
@@ -13,7 +13,7 @@ export function showBottomBar(actions) {
 
 export function redirectBottomBar(button, page) {
   return dispatch => {
-    return dispatch(updatePath(button.link(page.id)));
+    return dispatch(push(button.link(page.id)));
   };
 }
 

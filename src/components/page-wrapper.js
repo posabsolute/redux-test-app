@@ -46,11 +46,15 @@ export default class PageWrapper extends React.Component {
   }
 
   getPage() {
-    return (<div key={"page"}>{this.props.wrap}</div>);
+    return (<div key={"page"}>{this.props.wrap()}</div>);
   }
 
   getLoader() {
-    return (<div key={"loader"} className="button--loading loader--fixed loader--medium loader--blue"></div>);
+    return (
+      <div className="loader">
+        <div key={"loader"} className="button--loading loader--fixed loader--medium loader--blue"></div>
+      </div>
+    );
   }
 
   render() {
@@ -60,8 +64,8 @@ export default class PageWrapper extends React.Component {
 }
 
 PageWrapper.propTypes = {
-  state: React.PropTypes.obj,
+  state: React.PropTypes.any,
   isLoading: React.PropTypes.bool,
-  wrap: React.PropTypes.func,
+  wrap: React.PropTypes.any,
 };
 

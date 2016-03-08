@@ -1,7 +1,6 @@
-import { Schema, arrayOf, normalize } from 'normalizr';
 //import {GROWLER__SHOW} from 'actions/types/growler.types';
 import $  from 'jquery';
-
+import { push } from 'react-router-redux';
 const API_ROOT = '';
 
 // Fetches an API response and normalizes the result JSON according to schema.
@@ -65,6 +64,11 @@ function callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method
             type: 'growler--error',
           },
         });
+        if(data.status === 401) {
+          localStorage.removeItem('password');
+          console.log('test')
+          store.dispatch(push('/login'));
+        }
         reject(response);
       });
 

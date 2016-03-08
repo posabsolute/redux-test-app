@@ -59,6 +59,9 @@
 
 
 .sidebar_list{
+    &:active{
+    	color:#FF3366;
+    }
 	position:relative;
 	height:20px;
 	padding: 15px;

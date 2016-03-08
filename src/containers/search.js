@@ -1,7 +1,8 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
-import { updatePath } from 'redux-simple-router';
+import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
+import Time from 'react-time';
 
 import List from 'components/list/list-container';
 import PageWrapper from 'components/page-wrapper';
@@ -12,7 +13,6 @@ import * as searchActions from 'actions/search.action';
 
 import {issuesListSelector} from 'selectors/issues.selector';
 
-import {getFormatDateCreated} from 'utils/dates';
 
 const mapStateToProps = state => ({
   search: state.search,
@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => {
     ...bindActionCreators(pageActions, dispatch),
     ...bindActionCreators(searchActions, dispatch),
     loadIssue: (issue) => {
-      dispatch(updatePath(`/issue/${issue.id}`));
+      dispatch(push(`/issue/${issue.id}`));
     },
     searchIssues(query) {
       if (query) {
@@ -58,13 +58,13 @@ export default class IssueSearchContainer extends React.Component {
         { this.props.issues.length ?
           (<List
             items={this.props.issues}
-            descMod={getFormatDateCreated}
-            floatingLabelMod= {(points) => `${points} points`}
             onClick={this.props.loadIssue}
+            descMod={(item, sprint) => <Time value={sprint.fields.created} format="[Created on] MMMM DD, YYYY" />}
             map={{
               title: ['fields', 'summary'],
               desc: ['fields', 'created'],
               labels: ['fields', 'issuetype', 'name'],
+              floatingLabel: ['fields', 'priority', 'name'],
             }} />)
           : <h3 className="search-no-found">No issue found</h3>
         }
@@ -81,7 +81,7 @@ export default class IssueSearchContainer extends React.Component {
             onSubmit={this.props.onSubmit.bind(this)}
             defaultValue={this.props.params.query} />
           </div>
-        <PageWrapper isLoading={this.props.search.isLoading} wrap={this.searchList()} />
+        <PageWrapper isLoading={this.props.search.isLoading} wrap={this.searchList.bind(this)} />
       </section>
     );
   }

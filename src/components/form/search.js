@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updatePath } from 'redux-simple-router';
+
 
 export default class LoginComponent extends React.Component {
   componentWillMount() {
