@@ -56260,7 +56260,7 @@
 	    _react2.default.createElement(
 	      'p',
 	      null,
-	      'Reopoened issues are the total of time a issue assigned to the dev has been reopened'
+	      'Reopened issues are the number of time an issue assigned to the dev has been reopened in the sprint'
 	    )
 	  );
 	};
@@ -58134,7 +58134,6 @@
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      this.props.hideBottomBar();
-	      this.props.clearSprint();
 	    }
 	  }, {
 	    key: 'render',
@@ -58300,7 +58299,7 @@
 	          floatingLabelMod: function floatingLabelMod(points) {
 	            return points + ' points';
 	          },
-	          onClick: this.props.loadIssue,
+	          onClick: this.props.loadIssue.bind(this),
 	          map: {
 	            title: ['summary'],
 	            desc: ['statusName'],
@@ -58310,7 +58309,7 @@
 	        this.props.otherIssues && this.props.otherIssues.length ? _react2.default.createElement(_listContainer2.default, {
 	          title: 'Other Issues',
 	          items: this.props.otherIssues,
-	          onClick: this.props.loadIssue,
+	          onClick: this.props.loadIssue.bind(this),
 	          map: {
 	            title: ['summary'],
 	            desc: ['statusName'],
@@ -58322,7 +58321,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props.otherIssues);
 	      return _react2.default.createElement(_pageWrapper2.default, { loaderKey: 'sprintsLoader', key: 'sprintsWrapper', stateExist: this.props.otherIssues, wrap: this.page.bind(this) });
 	    }
 	  }]);
@@ -58422,6 +58420,7 @@
 	    value: function componentWillMount() {
 	      var projectId = this.props.params.id;
 	      this.props.pageBack(false);
+	      this.props.clearSprint();
 	      this.props.fetchSprints(projectId);
 	      this.props.fetchVelocity(projectId);
 	      this.props.updatePageTitle('Your Sprints', 'Sprints', this.props.routing.path);
@@ -58430,7 +58429,6 @@
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      this.props.hideBottomBar();
-	      this.props.clearSprints();
 	    }
 	  }, {
 	    key: 'render',
@@ -59721,11 +59719,17 @@
 	      var currentScope = scope && scope[0] || {};
 	      var issuesListScope = issuesList[currentScope.key] || {};
 	      var newValue = getNewValue(currentScope);
+	      var oldValue = getOldValue(currentScope);
 	      var issueValue = getNewValue(issuesListScope);
 
-	      if (newValue) {
-	        var value = newValue - issueValue;
+	      if (oldValue) {
+	        var value = newValue - oldValue;
 	        fullValue += value;
+	      }
+
+	      if (!oldValue && newValue) {
+	        var _value = newValue - issueValue;
+	        fullValue += _value;
 	      }
 
 	      if (isDone(currentScope)) {
@@ -59755,14 +59759,22 @@
 	      var currentScope = scope && scope[0] || {};
 	      var issuesListScope = issuesList[currentScope.key] || {};
 	      var newValue = getNewValue(currentScope);
+	      var oldValue = getOldValue(currentScope);
 	      var issueValue = getNewValue(issuesListScope);
 
-	      if (newValue) {
+	      if (oldValue) {
 	        var value = newValue - issueValue;
 	        fullValue += value;
 	      }
 
+	      if (!oldValue && newValue) {
+	        console.log(issuesListScope);
+	        var _value2 = newValue - issueValue;
+	        fullValue += _value2;
+	      }
+
 	      if (isDone(currentScope)) {
+
 	        fullValue = fullValue - issueValue;
 	      }
 
@@ -59786,6 +59798,13 @@
 	function getNewValue(obj) {
 	  if (obj && obj.statC && obj.statC.newValue) {
 	    return obj.statC.newValue;
+	  }
+	  return 0;
+	}
+
+	function getOldValue(obj) {
+	  if (obj && obj.statC && obj.statC.oldValue) {
+	    return obj.statC.oldValue;
 	  }
 	  return 0;
 	}

@@ -23,6 +23,6 @@ export default ({dataset}) => (
     </table>
 
     <p>*SP (Story points) are calculated as a participation in the story, it does not mean the dev did 100% of the work</p>
-    <p>Reopoened issues are the total of time a issue assigned to the dev has been reopened</p>
+    <p>Reopened issues are the number of time an issue assigned to the dev has been reopened in the sprint</p>
   </div>
 );

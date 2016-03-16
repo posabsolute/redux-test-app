@@ -49,6 +49,8 @@ export default class SprintsListContainer extends React.Component {
 
 SprintsListContainer.propTypes = {
   children: React.PropTypes.any,
+  redirectBottomBar: React.PropTypes.func,
+  clearSprint: React.PropTypes.func,
   fetchSprints: React.PropTypes.func,
   fetchVelocity: React.PropTypes.func,
   pageBack: React.PropTypes.func,

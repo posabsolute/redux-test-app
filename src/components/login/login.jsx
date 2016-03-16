@@ -32,7 +32,7 @@ export default ({user, validate, loginSubmit, redirect}) => (
                 validate={validate} />
               <InputText
                 name="password"
-                placeholder="password"
+                placeholder="Password"
                 classes="input-line"
                 errorLabel="true"
                 isPassword="true"

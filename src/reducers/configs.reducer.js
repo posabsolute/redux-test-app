@@ -1,8 +1,8 @@
 import { PAGE_CHANGE_TITLE } from 'actions/types/page.types';
 import { PROJECT_SELECTED, PROJECT_CONFIG_FETCH } from 'actions/types/projects.types';
+import { CONFIG_CLEAR } from 'actions/types/configs.types';
 
 const projectStore = localStorage.getItem('project') && JSON.parse(localStorage.getItem('project'));
-const boardStore = localStorage.getItem('board') && JSON.parse(localStorage.getItem('board'));
 
 const initialState = {
   pages: {
@@ -12,7 +12,7 @@ const initialState = {
   },
   project: projectStore || {},
   board: {
-    estimation: {field:{}},
+    estimation: {field: {}},
   },
 };
 
@@ -56,6 +56,9 @@ export function configs(state = initialState, action) {
         ...action.data,
       },
     };
+
+  case CONFIG_CLEAR:
+    return {...initialState};
 
   default:
     return state;

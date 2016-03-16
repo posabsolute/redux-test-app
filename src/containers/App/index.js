@@ -13,7 +13,7 @@ import Sidebar from 'components/sidebar/sidebar.js';
 import * as sidebarActions from 'actions/sidebar.action';
 import * as projectActions from 'actions/projects.action';
 import * as pageActions from 'actions/page.action';
-
+import * as configsActions from 'actions/configs.action';
 
 function onDeviceReady() {
   window.open = window.cordova.InAppBrowser.open;
@@ -23,9 +23,11 @@ document.addEventListener('deviceready', onDeviceReady, false);
 
 /* global styles for app */
 import 'style!./styles/app.scss';
+
 const mapStateToProps = (state) => {
   return {
     pageStore: state.page,
+    user: state.user,
     configs: state.configs,
   };
 };
@@ -35,10 +37,12 @@ const mapDispatchToProps = dispatch => {
     ...bindActionCreators(projectActions, dispatch),
     ...bindActionCreators(pageActions, dispatch),
     ...bindActionCreators(routerActions, dispatch),
+    ...bindActionCreators(configsActions, dispatch),
     logout() {
       localStorage.removeItem('password');
       dispatch(push(`/login`));
       this.props.clearProjects();
+      this.props.clearConfigs();
       this.props.hideSidebar();
     },
     goBack() {
