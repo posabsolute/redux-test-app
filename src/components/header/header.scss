@@ -1,15 +1,15 @@
 .header-fix {
-  position: fixed;
+  position: absolute;
   z-index: 100;
-  height:41px;
+  height:44px;
   width:100%;
   display:block;
   z-index:5;
   top:0; left:0;
 }
 .header-bg{
-  position:fixed;
-  height:41px;
+  position:absolute;
+  height:44px;
   top:0;left:0;
   background:#FF3366;
   width:100%;
@@ -17,12 +17,12 @@
 }
 
 .header-title{
-  position:fixed;
+  position:absolute;
   width:80%;
-  top:2px;left:10%;
+  top:1px;left:10%;
   z-index: 1;
   font-size:16px;
-  padding-top:10px;
+  padding-top:11px;
   margin: 0 auto;
   text-align: center;
   overflow:hidden;
@@ -34,7 +34,7 @@
   position:absolute;
   top:0; left:0;
   display:block;
-  width: 69px; height:40px;
+  width: 69px; height:44px;
   padding:8px 5px 8px 10px;
   color:#fff;
   &:hover, &:active{

@@ -33,7 +33,7 @@ export default class ProjectListContainer extends React.Component {
   }
   page() {
     return (
-      <section className="row">
+      <section className="row row__row--header" key="projectContainer">
         <HeaderSection title={"Project List"} background={"images/pjbg.jpg"} />
         <List
           items={this.props.projects}
@@ -44,7 +44,7 @@ export default class ProjectListContainer extends React.Component {
   }
   render() {
     return (
-      <PageWrapper state={this.props.projects} wrap={this.page.bind(this)} />
+      <PageWrapper loaderKey="projectLoader" key="projectWrapper" state={this.props.projects} wrap={this.page.bind(this)} />
     );
   }
 }

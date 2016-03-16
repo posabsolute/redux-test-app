@@ -3,12 +3,13 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var csswring = require('csswring');
+var polyfill = require('babel-polyfill');
 
 module.exports = {
   entry: [
     './src/index',
   ],
-   cache:false,
+  cache: false,
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, '../dist'),
@@ -18,7 +19,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"',
+        'NODE_ENV': JSON.stringify('production')
       },
       __DEVELOPMENT__: false,
     }),
@@ -41,7 +42,13 @@ module.exports = {
       loader: 'imports?jQuery=jquery',
     }, {
       test:[/\.jsx$/,  /\.js$/],
-      loaders: ['react-hot', 'babel?stage=0&loose[]=es6.modules'],
+      loader: 'babel',
+      query: {
+          // https://github.com/babel/babel-loader#options
+          cacheDirectory: true,
+          plugins: ['transform-decorators-legacy' ],
+          presets: ['es2015', 'stage-0', 'react'],
+      },
       include: [
         path.resolve(__dirname, "../src"),
         path.resolve(__dirname, "../node_modules/flash-notification-react-redux"),

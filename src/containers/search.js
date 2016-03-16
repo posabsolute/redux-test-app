@@ -74,9 +74,9 @@ export default class IssueSearchContainer extends React.Component {
 
   render() {
     return (
-      <section className="row pageRow">
+      <section className="row pageRow" key="searchContainer">
         <div className="pad10">
-          <IssueSearch 
+          <IssueSearch
             onChange={this.props.onChange.bind(this)}
             onSubmit={this.props.onSubmit.bind(this)}
             defaultValue={this.props.params.query} />

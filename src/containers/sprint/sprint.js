@@ -38,11 +38,13 @@ export default class SprintContainer extends React.Component {
 
   getSubtitle() {
     if (this.props.sprint.allIssuesEstimateSum) {
+      const completedIssuesEstimateSum = parseInt(this.props.sprint.completedIssuesEstimateSum.text, 10) ? this.props.sprint.completedIssuesEstimateSum.text : 0;
+      const allIssuesEstimateSum = parseInt(this.props.sprint.allIssuesEstimateSum.text, 10) ? this.props.sprint.allIssuesEstimateSum.text : 0;
       return (
         <div>
-          <span className="header-section__small_text">Story Points: {this.props.sprint.allIssuesEstimateSum.text}</span>
+          <span className="header-section__small_text">Story Points: {allIssuesEstimateSum}</span>
           <span className="ion-ios-arrow-thin-right header-section__arrow"></span>
-          {this.props.sprint.completedIssuesEstimateSum.text}
+          {completedIssuesEstimateSum}
         </div>
       );
     }
@@ -51,14 +53,14 @@ export default class SprintContainer extends React.Component {
 
   page() {
     return (
-      <section className="row">
+      <section className="row  row__row--header row__row--bottom" key="sprintContainer">
         <HeaderSection title={this.props.sprint.name} background={"images/img3.jpg"} subtitle={this.getSubtitle()} />
         { this.props.stories.length ?
           (<List
             title="Stories"
             items={this.props.stories}
             floatingLabelMod= {(points) => `${points} points`}
-            onClick={this.props.loadIssue}
+            onClick={this.props.loadIssue.bind(this)}
             map={{
               title: ['summary'],
               desc: ['statusName'],
@@ -67,11 +69,11 @@ export default class SprintContainer extends React.Component {
             }} />)
           : null
         }
-        { this.props.otherIssues.length ?
+        { this.props.otherIssues && this.props.otherIssues.length ?
           <List
             title="Other Issues"
             items={this.props.otherIssues}
-            onClick={this.props.loadIssue}
+            onClick={this.props.loadIssue.bind(this)}
             map={{
               title: ['summary'],
               desc: ['statusName'],
@@ -86,7 +88,7 @@ export default class SprintContainer extends React.Component {
 
   render() {
     return (
-      <PageWrapper state={this.props.sprint.state} wrap={this.page.bind(this)} />
+      <PageWrapper loaderKey="sprintsLoader" key="sprintsWrapper" stateExist={this.props.otherIssues} wrap={this.page.bind(this)} />
     );
   }
 }

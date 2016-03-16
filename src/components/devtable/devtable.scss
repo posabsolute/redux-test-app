@@ -17,3 +17,9 @@
 .table-data__error{
 	color:#f36;
 }
+
+@media (min-width:768px) {
+	.table-data{
+		th, td{font-size:14px;}
+	}
+}

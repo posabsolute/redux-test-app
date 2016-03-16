@@ -43,7 +43,7 @@ export default class SprintsListContainer extends React.Component {
 
   page() {
     return (
-      <section className="row pageRow">
+      <section className="row pageRow row__row--bottom"  key="burnContainer">
         <Burndown dataset={this.props.valuesPerDay} />
         <div className="list-data__row">
           <ListItem label="Start Date" text={<Time value={this.props.burndown.startTime} format="MMMM DD" />} />
@@ -67,7 +67,7 @@ export default class SprintsListContainer extends React.Component {
 
   render() {
     return (
-      <PageWrapper state={this.props.valuesPerDay} wrap={this.page.bind(this)} />
+      <PageWrapper loaderKey="burnLoader" key="burnWrapper" state={this.props.valuesPerDay} wrap={this.page.bind(this)} />
     );
   }
 }

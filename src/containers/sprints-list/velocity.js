@@ -28,14 +28,14 @@ export default class SprintsListContainer extends React.Component {
   }
   page() {
     return (
-      <section className="row pageRow">
+      <section className="row pageRow row__row--header row__row--bottom" key="veloContainer">
         <Velocity dataset={this.props.formattedVelocity} />
       </section>
     );
   }
   render() {
     return (
-      <PageWrapper state={this.props.formattedVelocity} wrap={this.page.bind(this)} />
+      <PageWrapper loaderKey="veloLoader" key="veloWrapper" state={this.props.formattedVelocity} wrap={this.page.bind(this)} />
     );
   }
 }

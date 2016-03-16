@@ -31,6 +31,8 @@
 .button--loading {
   position: relative;
   cursor: wait;
+  left: 0%;
+  top: 42%;
 }
 .button--loading:before {
   margin: -13px 0 0 -13px;
@@ -62,7 +64,7 @@
 
 
 .loader--fixed:before{
-  position:fixed;
+  position:absolute;
 }
 
 .loader--medium:before{

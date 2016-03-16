@@ -40,8 +40,28 @@ module.exports = {
       test: /bootstrap\/js\//,
       loader: 'imports?jQuery=jquery',
     }, {
-      test:[/\.jsx$/,  /\.js$/],
-      loaders: ['react-hot', 'babel?stage=0&loose[]=es6.modules'],
+      test:/\.jsx$/,
+      loader: ['babel'],
+      query: {
+        // https://github.com/babel/babel-loader#options
+        cacheDirectory: false,
+        plugins: ['transform-decorators-legacy' ],
+        presets: ['es2015', 'react', 'stage-0'],
+      },
+      include: [
+        path.resolve(__dirname, "../src"),
+        path.resolve(__dirname, "../node_modules/flash-notification-react-redux"),
+        path.resolve(__dirname, "../node_modules/redux-form-validator"),
+      ],
+    }, {
+      test:/\.js$/,
+      loader: ['babel'],
+      query: {
+        // https://github.com/babel/babel-loader#options
+        cacheDirectory: true,
+        plugins: ['transform-decorators-legacy' ],
+        presets: ['es2015', 'react', 'stage-0'],
+      },
       include: [
         path.resolve(__dirname, "../src"),
         path.resolve(__dirname, "../node_modules/flash-notification-react-redux"),

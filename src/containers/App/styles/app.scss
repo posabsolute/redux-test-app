@@ -6,6 +6,28 @@
 @import 'links';
 
 
+section.row{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow-y: scroll;
+  height: 100%;
+  margin:0 0 0 0;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  transform: translateZ(0);
+}
+
+.row__row--header{
+  padding-top:44px;
+}
+
+.row__row--bottom{
+  padding-bottom:50px;
+}
+
+
 :global(body) {
   position: relative;
 
@@ -23,6 +45,11 @@
     width: 100%;
   }
 
+  #root{
+    min-height: 100%;
+    background:#fff;
+  }
+
   .search-no-found{padding-top:200px; text-align: center;}
   
   .pagePad{padding-left:10px; padding-right:10px;}
@@ -38,7 +65,7 @@
     -webkit-transform: scale(-1, 1);
     -ms-transform: scale(-1, 1);
     transform: scale(-1, 1);
-}
+  }
 
   .cf:before,
   .cf:after {
@@ -56,5 +83,12 @@
    */
   .cf {
       *zoom: 1;
+  }
+
+  @media (min-width:768px) {
+    font-size:16px;
+    p{
+      font-size: 16px;
+    }
   }
 }

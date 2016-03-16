@@ -8,7 +8,7 @@ export const issuesListSelector = createSelector(
   (issues, searchIssues) => {
     return {
       stories: issues.filter(issue => issue.currentEstimateStatistic),
-      otherIssues: issues.filter(issue => !issue.currentEstimateStatistic),
+      otherIssues: issues.length ? issues.filter(issue => !issue.currentEstimateStatistic) : null,
       searchResults: searchIssues.sort((issueA, issueB) => new Date(issueB.created) - new Date(issueA.created)) || [],
     };
   }

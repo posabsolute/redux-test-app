@@ -27,7 +27,7 @@ export function addComment(comment, id) {
       types: [ ADD_COMMENT_REQUEST, ADD_COMMENT_FETCH, ADD_COMMENT_FAILURE ],
       method: 'POST',
       postData: {
-      	'body': comment,
+      	"body": comment,
       },
       endpoint: commentModel.endpoint(id),
       model: commentModel,

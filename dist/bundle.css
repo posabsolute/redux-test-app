@@ -44,9 +44,9 @@
   margin-right: 5px;
   margin-bottom: -6px; }
 .header-fix {
-  position: fixed;
+  position: absolute;
   z-index: 100;
-  height: 41px;
+  height: 44px;
   width: 100%;
   display: block;
   z-index: 5;
@@ -54,8 +54,8 @@
   left: 0; }
 
 .header-bg {
-  position: fixed;
-  height: 41px;
+  position: absolute;
+  height: 44px;
   top: 0;
   left: 0;
   background: #FF3366;
@@ -63,13 +63,13 @@
   z-index: 1; }
 
 .header-title {
-  position: fixed;
+  position: absolute;
   width: 80%;
-  top: 2px;
+  top: 1px;
   left: 10%;
   z-index: 1;
   font-size: 16px;
-  padding-top: 10px;
+  padding-top: 11px;
   margin: 0 auto;
   text-align: center;
   overflow: hidden;
@@ -82,7 +82,7 @@
   left: 0;
   display: block;
   width: 69px;
-  height: 40px;
+  height: 44px;
   padding: 8px 5px 8px 10px;
   color: #fff; }
   .header-btn-menu:hover, .header-btn-menu:active {
@@ -98,7 +98,7 @@
 .pageRow {
   padding-top: 60px; }
 .sidebar {
-  position: fixed;
+  position: absolute;
   z-index: 1000;
   top: 0;
   left: 0;
@@ -111,7 +111,7 @@
   display: block;
   background-color: #fff;
   transition: opacity 0.3s, margin-left 0.3s;
-  -webkit-transform: translateZ(0); }
+  transform: translateZ(0); }
 
 .sidebar--show {
   visibility: visible;
@@ -155,7 +155,6 @@
   line-height: 14px; }
 
 .sidebar_list {
-  -webkit-tap-highlight-color: #eee;
   position: relative;
   height: 20px;
   padding: 15px;
@@ -163,6 +162,8 @@
   line-height: 20px;
   box-sizing: content-box;
   border-bottom: 1px solid #f4f4f4; }
+  .sidebar_list:active {
+    color: #FF3366; }
 
 .sidebar_list_indented {
   padding-left: 30px; }
@@ -219,10 +220,12 @@
 
 .list-item {
   position: relative;
-  padding: 10px 0px;
+  padding: 10px 10px;
+  margin: 0 -10px;
   color: #333;
-  -webkit-tap-highlight-color: #eee;
   border-bottom: 1px solid #f4f4f4; }
+  .list-item:active {
+    color: #FF3366; }
   .list-item:first-child {
     border-top: 1px solid #f4f4f4; }
 
@@ -230,8 +233,12 @@
   font-size: 15px;
   line-height: 18px;
   color: #f36;
-  padding: 20px 0 10px 0;
+  padding: 10px 0 10px 0;
   border-bottom: 1px solid #f4f4f4; }
+
+.list-title--margin {
+  margin: 0 -10px;
+  padding: 10px 10px 10px 10px; }
 
 .list-item__title {
   font-size: 18px;
@@ -262,6 +269,18 @@
   width: 50%;
   display: inline-block;
   box-sizing: border-box; }
+
+@media (min-width: 768px) {
+  .list-data__item__label {
+    font-size: 13px; }
+  .list-data__row {
+    padding: 20px 20px; }
+  .list-item {
+    padding: 10px 15px;
+    margin: 0 -15px; }
+  .list-title--margin {
+    margin: 0 -15px;
+    padding: 15px 15px 10px 15px; } }
 @charset "UTF-8";
 /* global styles */
 /* 
@@ -2510,13 +2529,28 @@ h5,
 h6 {
   font-weight: 300; }
 
-p {
-  font-size: 16px; }
-
 a {
   text-decoration: none; }
   a:hover {
     text-decoration: none; }
+
+section.row {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow-y: scroll;
+  height: 100%;
+  margin: 0 0 0 0;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  transform: translateZ(0); }
+
+.row__row--header {
+  padding-top: 44px; }
+
+.row__row--bottom {
+  padding-bottom: 50px; }
 
 body {
   position: relative;
@@ -2532,6 +2566,9 @@ body {
     font-size: 14px; }
   body img {
     width: 100%; }
+  body #root {
+    min-height: 100%;
+    background: #fff; }
   body .search-no-found {
     padding-top: 200px;
     text-align: center; }
@@ -2559,6 +2596,11 @@ body {
     clear: both; }
   body .cf {
     *zoom: 1; }
+  @media (min-width: 768px) {
+    body {
+      font-size: 16px; }
+      body p {
+        font-size: 16px; } }
 .label-error {
   color: #fff; }
 
@@ -2575,7 +2617,7 @@ body {
   border: none;
   border-left: 1px solid #ddd; }
 
-input[type="text"] {
+input[type="text"], input[type="password"] {
   -webkit-appearance: none;
   appearance: none;
   border-radius: 0; }
@@ -2586,7 +2628,7 @@ input[type="text"]:focus {
 .btn.btn-full {
   width: 100%;
   border-radius: 0px;
-  font-size: 16px;
+  font-size: 18px;
   color: #eee;
   font-weight: lighter;
   border: none;
@@ -2650,7 +2692,7 @@ input[type="text"]:focus {
   background-size: cover;
   width: 100%;
   height: 100%;
-  background: #555 url(login_bg.jpg) no-repeat center center fixed; }
+  background: #555 url(login_bg2.jpg) no-repeat center center fixed; }
 
 .login-page {
   position: absolute;
@@ -2671,16 +2713,12 @@ input[type="text"]:focus {
 
 .login-icon {
   color: #fff;
-  width: 100px;
-  height: 100px;
-  margin: 25px; }
+  width: 150px;
+  height: 150px;
+  margin: 24% 0 0 0; }
 
 .login-icon-container {
   text-align: center;
-  width: 150px;
-  height: 150px;
-  background-color: rgba(255, 255, 255, 0.6);
-  border-radius: 150px;
   margin: 0 auto; }
 
 .login-title {
@@ -2709,6 +2747,7 @@ input[type="text"]:focus {
   position: relative;
   z-index: 3;
   height: 150px;
+  background-color: #fff;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center; }
@@ -2767,7 +2806,9 @@ input[type="text"]:focus {
 
 .button--loading {
   position: relative;
-  cursor: wait; }
+  cursor: wait;
+  left: 0%;
+  top: 42%; }
 
 .button--loading:before {
   margin: -13px 0 0 -13px;
@@ -2797,7 +2838,7 @@ input[type="text"]:focus {
   text-shadow: none; }
 
 .loader--fixed:before {
-  position: fixed; }
+  position: absolute; }
 
 .loader--medium:before {
   margin: -25px 0 0 -25px;
@@ -2824,7 +2865,7 @@ input[type="text"]:focus {
   z-index: 20;
   bottom: 0;
   left: 0;
-  position: fixed;
+  position: absolute;
   display: table;
   width: 100%;
   height: 50px;
@@ -2879,6 +2920,10 @@ input[type="text"]:focus {
 
 .table-data__error {
   color: #f36; }
+
+@media (min-width: 768px) {
+  .table-data th, .table-data td {
+    font-size: 14px; } }
 .comment {
   padding: 10px;
   font-size: 13px;
@@ -2886,6 +2931,14 @@ input[type="text"]:focus {
   border-bottom: 1px solid #f4f4f4; }
   .comment p, .comment li {
     font-size: 13px; }
+
+.email {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f4f4f4; }
+
+.email-link {
+  padding: 5px 10px;
+  display: block; }
 
 .comment__meta {
   padding-top: 4px;
@@ -2931,3 +2984,29 @@ h3 {
   .issue__description li {
     font-size: 13px;
     word-wrap: break-word; }
+
+@media (min-width: 768px) {
+  .issue__description {
+    font-size: 15px; }
+    .issue__description p {
+      font-size: 15px; }
+    .issue__description li {
+      font-size: 15px; }
+  .issue__description {
+    padding: 20px; }
+  h3 {
+    padding: 10px 15px 10px 15px; }
+  .comment {
+    padding: 10px 15px;
+    font-size: 14px; }
+    .comment p {
+      font-size: 14px; }
+  .form-comment {
+    padding: 15px; }
+  .comment__meta {
+    font-size: 12px; }
+  .email-link {
+    padding: 5px 15px; }
+  .header-btn-menu {
+    width: 85px;
+    padding: 8px 5px 8px 15px; } }

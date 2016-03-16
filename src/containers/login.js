@@ -10,10 +10,7 @@ const mapStateToProps = (state) => {
 
 @connect(mapStateToProps, null)
 export default class LoginComponent extends React.Component {
-  componentWillMount(){
-  }
-  
   render() {
-    return <LoginForm {...this.props} redirect={'/projects'} />;
+    return <LoginForm key="loginContainer" {...this.props} redirect={'/projects'} />;
   }
 }

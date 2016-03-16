@@ -18,7 +18,7 @@ export default class ListContainer extends React.Component {
     const {title, items, map, onClick, labelsMod, titleMod, floatingLabelMod, descMod} = this.props;
     return (
       <div className="list-item_container col-lg-12">
-        { title ? <div className="list-title">{title}</div> : null }
+        { title ? <div className="list-title list-title--margin">{title}</div> : null }
         {items.map((item, index) =>
             <ListItem
               index={index}

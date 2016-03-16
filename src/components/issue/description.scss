@@ -6,3 +6,30 @@
   p{font-size: 13px; word-wrap: break-word;}
   li{font-size: 13px; word-wrap: break-word;}
 }
+
+
+@media (min-width:768px) {
+  .issue__description{
+    font-size: 15px;
+    p{font-size: 15px;}
+  	li{font-size: 15px;}
+  }
+
+  .issue__description{
+  	padding:20px;
+  }
+  h3{padding:10px 15px 10px 15px;}
+  .comment{
+  	padding:10px 15px;
+  	font-size:14px;
+  	p{font-size:14px;}
+  }
+  .form-comment{padding:15px;}
+  .comment__meta{font-size:12px;}
+  .email-link{padding:5px 15px;}
+
+  .header-btn-menu {
+    width: 85px;
+    padding: 8px 5px 8px 15px;
+  }
+}

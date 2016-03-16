@@ -30,7 +30,7 @@ export default class DevelopersContainer extends React.Component {
 
   page() {
     return (
-      <section className="row pageRow pagePad">
+      <section className="row pageRow pagePad row__row--bottom" key="devContainer">
         <DevTable dataset={this.props.devsWorkDataset} />
       </section>
     );
@@ -38,7 +38,7 @@ export default class DevelopersContainer extends React.Component {
 
   render() {
     return (
-      <PageWrapper state={this.props.devsWorkDataset} wrap={this.page.bind(this)} />
+      <PageWrapper key="devWrapper" loaderKey="devLoader" state={this.props.devsWorkDataset} wrap={this.page.bind(this)} />
     );
   }
 }

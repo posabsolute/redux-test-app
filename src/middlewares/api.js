@@ -22,10 +22,12 @@ function callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method
         xhrFields: {
           withCredentials: true,
         },
-        contentType: 'application/json',
+        'contentType': 'application/json',
         method: method || 'GET',
         headers: {
           'Accept': 'application/json',
+          'Origin': 'localhost',
+          'User-Agent': null,
           'X-Atlassian-Token': 'no-check',
           'x-requested-with': 'XMLHttpRequest',
           'Authorization': 'Basic ' + btoa(user.username + ':' + user.password),

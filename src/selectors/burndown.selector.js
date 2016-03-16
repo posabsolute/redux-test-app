@@ -37,9 +37,15 @@ function getValuesPerDay(issues) {
       const currentScope = scope && scope[0] || {};
       const issuesListScope = issuesList[currentScope.key] || {};
       const newValue = getNewValue(currentScope);
+      const oldValue = getOldValue(currentScope);
       const issueValue = getNewValue(issuesListScope);
 
-      if (newValue) {
+      if (oldValue) {
+        const value = newValue - oldValue;
+        fullValue += value;
+      }
+
+      if (!oldValue && newValue) {
         const value = newValue - issueValue;
         fullValue += value;
       }
@@ -74,14 +80,22 @@ function getValuesPerDay(issues) {
       const currentScope = scope && scope[0] || {};
       const issuesListScope = issuesList[currentScope.key] || {};
       const newValue = getNewValue(currentScope);
+      const oldValue = getOldValue(currentScope);
       const issueValue = getNewValue(issuesListScope);
 
-      if (newValue) {
+      if (oldValue) {
+        const value = newValue - issueValue;
+        fullValue += value;
+      }
+
+      if (!oldValue && newValue) {
+        console.log(issuesListScope);
         const value = newValue - issueValue;
         fullValue += value;
       }
 
       if (isDone(currentScope)) {
+
         fullValue = fullValue - issueValue;
       }
 
@@ -108,6 +122,13 @@ function getValuesPerDay(issues) {
 function getNewValue(obj){
   if (obj && obj.statC && obj.statC.newValue) {
     return obj.statC.newValue;
+  }
+  return 0;
+}
+
+function getOldValue(obj){
+  if (obj && obj.statC && obj.statC.oldValue) {
+    return obj.statC.oldValue;
   }
   return 0;
 }

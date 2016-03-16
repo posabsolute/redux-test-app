@@ -7,6 +7,7 @@ import * as issueActions from 'actions/issue.action';
 
 import CommentsComponent from 'components/comments/comments';
 import AddCommentForm from 'components/comments/add-comment.js';
+import Email from 'components/comments/sendemail';
 import IssueStatus from 'components/issue/issue-status';
 import Attachment from 'components/issue/attachment';
 import IssueDescription from 'components/issue/issue-description';
@@ -34,6 +35,10 @@ export default class IssueContainer extends React.Component {
     });
   }
 
+  getLink() {
+    return this.props.issue.self.replace(/rest\/agile\/1.0\/issue\/(.*)/, `browse/${this.props.issue.key}`);
+  }
+
   componentWillUnmount() {
     this.props.clearIssue();
   }
@@ -42,28 +47,33 @@ export default class IssueContainer extends React.Component {
     window.scrollTo(0, 0);
   }
 
+  reload() {
+    this.props.clearIssue();
+    this.componentWillMount();
+  }
+
   page() {
-    console.log(this.props.issue.project);
     return (
-      <section className="row">
+      <section className="row" key="issueContainer">
         <IssueStatus {...this.props.issue} pointField={this.props.configs.board.estimation.field.fieldId} />
         <IssueDescription description={this.props.issue.description} />
         { this.props.issue.attachment.length ? <Attachment attachment={this.props.issue.attachment} /> : null }
+        <Email id={this.props.issue.key} subject={this.props.issue.summary} link={this.getLink()} />
         <CommentsComponent comments={this.props.issue.comment.comments} />
-        <AddCommentForm {...this.props} />
+        <AddCommentForm {...this.props} reload={this.reload.bind(this)} />
       </section>
     );
   }
 
   render() {
-    console.log(this.props.issue);
     return (
-      <PageWrapper state={this.props.issue.status} wrap={this.page.bind(this)} />
+      <PageWrapper loaderKey="issueLoader" key="issueWrapper" state={this.props.issue.status} wrap={this.page.bind(this)} />
     );
   }
 }
 
 IssueContainer.propTypes = {
+  self: React.PropTypes.string,
   configs: React.PropTypes.object,
   routing: React.PropTypes.object,
   hideBottomBar: React.PropTypes.func,

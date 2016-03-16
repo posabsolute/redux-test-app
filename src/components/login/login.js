@@ -21,15 +21,13 @@ const mapDispatchToProps = (
 ) => {
   return {
     ...bindActionCreators(validateActions, dispatch),
-    onSubmit: function submit(evt, validate, redirect) {
+    loginSubmit(evt, validate, redirect) {
       const form = evt.target;
       if (validate.formValidate(form.elements)) {
-
         dispatch(login({
           username: form.username.value,
           password: form.password.value,
           url: form.url.value,
-
         })).then((action) =>{
           localStorage.setItem('username', form.username.value);
           localStorage.setItem('password', form.password.value);

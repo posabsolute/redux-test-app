@@ -16,7 +16,7 @@ export default class PageWrapper extends React.Component {
 
   isEmpty(obj) {
     // null and undefined are "empty"
-    if (obj == null) return true;
+    if (!obj) return true;
 
     // Assume if it has a length property with a non-zero value
     // that that property is correct.
@@ -42,17 +42,20 @@ export default class PageWrapper extends React.Component {
     if ((this.props.state && this.isEmpty(this.props.state)) || this.props.isLoading === true) {
       return this.getLoader();
     }
+    if (this.props.stateExist === null) {
+      return this.getLoader();
+    }
     return this.getPage(this.useLoader);
   }
 
   getPage() {
-    return (<div key={"page"}>{this.props.wrap()}</div>);
+    return this.props.wrap();
   }
 
   getLoader() {
     return (
-      <div className="loader">
-        <div key={"loader"} className="button--loading loader--fixed loader--medium loader--blue"></div>
+      <div className="loader" key={this.props.loaderKey}>
+        <div className="button--loading loader--fixed loader--medium loader--blue"></div>
       </div>
     );
   }
@@ -64,6 +67,8 @@ export default class PageWrapper extends React.Component {
 }
 
 PageWrapper.propTypes = {
+  stateExist: React.PropTypes.any,
+  loaderKey: React.PropTypes.string,
   state: React.PropTypes.any,
   isLoading: React.PropTypes.bool,
   wrap: React.PropTypes.any,

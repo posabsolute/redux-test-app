@@ -38,7 +38,6 @@ export default class SprintsListContainer extends React.Component {
 
   componentWillUnmount() {
     this.props.hideBottomBar();
-    this.props.clearSprint();
   }
 
   render() {

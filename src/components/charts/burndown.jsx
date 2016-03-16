@@ -42,6 +42,9 @@ export default class BurndownComponent extends React.Component {
       xAxis: {
         categories: this.getCats(),
       },
+      credits: {
+        enabled: false,
+      },
       yAxis: {
         title: {
           text: null,

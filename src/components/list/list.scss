@@ -17,7 +17,8 @@
 
 .list-item{
   position:relative;
-  padding: 10px 0px;
+  padding: 10px 10px;
+  margin:0 -10px;
   color:#333;
   border-bottom: 1px solid #f4f4f4;
   &:active{
@@ -32,9 +33,13 @@
     font-size:15px;
     line-height:18px;
     color:#f36;
-    padding:20px 0 10px 0;
+    padding:10px 0 10px 0;
     border-bottom: 1px solid #f4f4f4;
   }
+    .list-title--margin{
+      margin:0 -10px;
+      padding:10px 10px 10px 10px;
+    }
 
   .list-item__title{
     font-size: 18px;
@@ -73,3 +78,22 @@
     display: inline-block;
     box-sizing: border-box
   }
+
+
+
+@media (min-width:768px) {
+  .list-data__item__label{
+    font-size: 13px;
+  }
+  .list-data__row{
+    padding:20px 20px;
+  }
+  .list-item{
+    padding: 10px 15px;
+    margin: 0 -15px;
+  }
+    .list-title--margin{
+      margin:0 -15px;
+      padding:15px 15px 10px 15px;
+    }
+}

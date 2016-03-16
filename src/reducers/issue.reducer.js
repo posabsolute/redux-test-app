@@ -6,6 +6,7 @@ const initialState = {
     displayName: 'Unassigned',
   },
   status:{},
+  self:'',
   description: '',
   resolution: {},
   attachment: [],

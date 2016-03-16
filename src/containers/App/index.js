@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { push, routerActions } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import 'bootstrap-webpack';
-//import 'react-fastclick';
+import 'react-fastclick';
 
 import {GrowlerContainer} from 'flash-notification-react-redux';
 import GrowlerMessages from 'locales/growler.locale.js';
@@ -36,6 +36,7 @@ const mapDispatchToProps = dispatch => {
     ...bindActionCreators(pageActions, dispatch),
     ...bindActionCreators(routerActions, dispatch),
     logout() {
+      localStorage.removeItem('password');
       dispatch(push(`/login`));
       this.props.clearProjects();
       this.props.hideSidebar();

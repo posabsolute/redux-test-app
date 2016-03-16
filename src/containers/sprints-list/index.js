@@ -27,6 +27,7 @@ export default class SprintsListContainer extends React.Component {
   componentWillMount() {
     const projectId = this.props.params.id;
     this.props.pageBack(false);
+    this.props.clearSprint();
     this.props.fetchSprints(projectId);
     this.props.fetchVelocity(projectId);
     this.props.updatePageTitle('Your Sprints', 'Sprints', this.props.routing.path);
@@ -34,7 +35,6 @@ export default class SprintsListContainer extends React.Component {
 
   componentWillUnmount() {
     this.props.hideBottomBar();
-    this.props.clearSprints();
   }
 
   render() {
