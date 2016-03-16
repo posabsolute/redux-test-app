@@ -24,24 +24,24 @@ const mapDispatchToProps = (
     loginSubmit(evt, validate, redirect) {
       const form = evt.target;
       if (validate.formValidate(form.elements)) {
+        const url = form.url.value.replace(/\/(\s+)?$/, '');
         dispatch(login({
           username: form.username.value,
           password: form.password.value,
-          url: form.url.value,
+          url: url,
         })).then((action) =>{
           localStorage.setItem('username', form.username.value);
           localStorage.setItem('password', form.password.value);
           localStorage.setItem('displayName', action.data.displayName);
           localStorage.setItem('emailAddress', action.data.emailAddress);
           localStorage.setItem('avatarUrls', action.data.avatarUrls['48x48']);
-          localStorage.setItem('url', form.url.value);
+          localStorage.setItem('url', url);
           dispatch(push(redirect));
         });
       }
     },
   };
 };
-
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class LoginComponent extends React.Component {
