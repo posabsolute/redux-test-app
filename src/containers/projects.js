@@ -2,11 +2,15 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
+
 import List from 'components/list/list-container';
 import HeaderSection from 'components/header-section/header-section.jsx';
+import PageWrapper from 'components/page-wrapper';
+
 import * as projectsActions from 'actions/projects.action';
 import * as pageActions from 'actions/page.action';
-import PageWrapper from 'components/page-wrapper';
+import * as sprintActions from 'actions/sprints.action';
+
 
 const mapStateToProps = state => ({
   projects: state.projects,
@@ -16,6 +20,7 @@ const mapDispatchToProps = dispatch => {
   return {
     ...bindActionCreators(pageActions, dispatch),
     ...bindActionCreators(projectsActions, dispatch),
+    ...bindActionCreators(sprintActions, dispatch),
     loadSprints(project) {
       this.props.selectProject(project);
       this.props.fetchProjectConfig(project.id);
@@ -28,6 +33,7 @@ const mapDispatchToProps = dispatch => {
 export default class ProjectListContainer extends React.Component {
   componentWillMount() {
     this.props.pageBack(false);
+    this.props.clearSprints();
     this.props.fetchProjects();
     this.props.updatePageTitle('Your Projects', 'Projects', this.props.routing.path);
   }
@@ -52,6 +58,7 @@ export default class ProjectListContainer extends React.Component {
 ProjectListContainer.propTypes = {
   fetchProjects: React.PropTypes.func,
   pageBack: React.PropTypes.func,
+  clearSprints: React.PropTypes.func,
   routing: React.PropTypes.object,
   projects: React.PropTypes.object,
   loadSprints: React.PropTypes.func,

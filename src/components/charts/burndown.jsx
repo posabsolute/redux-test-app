@@ -55,7 +55,7 @@ export default class BurndownComponent extends React.Component {
         }],
       },
       tooltip: {
-        valueSuffix: ' hrs',
+        valueSuffix: ' points',
         crosshairs: true,
         shared: true,
       },
