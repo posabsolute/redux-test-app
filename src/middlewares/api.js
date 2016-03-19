@@ -15,20 +15,16 @@ function callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method
 
     function ajaxCall(startAt) {
       const url = startAt ? `${fullUrl}&startAt=${startAt}` : fullUrl;
+      console.log(user);
       return $.ajax({
         url: url,
         data: JSON.stringify(postData),
         processData: false,
-        xhrFields: {
-          withCredentials: true,
-        },
-        'contentType': 'application/json',
+        crossDomain: true,
+        contentType: 'application/json',
         method: method || 'GET',
         headers: {
           'Accept': 'application/json',
-          'Origin': 'localhost',
-          'User-Agent': null,
-          'X-Atlassian-Token': 'no-check',
           'x-requested-with': 'XMLHttpRequest',
           'Authorization': 'Basic ' + btoa(user.username + ':' + user.password),
         },

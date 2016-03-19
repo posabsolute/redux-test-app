@@ -25,13 +25,15 @@ const mapDispatchToProps = (
       const form = evt.target;
       if (validate.formValidate(form.elements)) {
         const url = form.url.value.replace(/\/(\s+)?$/, '');
+
+        localStorage.setItem('username', form.username.value);
+        localStorage.setItem('password', form.password.value);
+
         dispatch(login({
           username: form.username.value,
           password: form.password.value,
           url: url,
         })).then((action) =>{
-          localStorage.setItem('username', form.username.value);
-          localStorage.setItem('password', form.password.value);
           localStorage.setItem('displayName', action.data.displayName);
           localStorage.setItem('emailAddress', action.data.emailAddress);
           localStorage.setItem('avatarUrls', action.data.avatarUrls['48x48']);

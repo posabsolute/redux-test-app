@@ -270,6 +270,12 @@
   display: inline-block;
   box-sizing: border-box; }
 
+.list-data__item__text {
+  height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
 @media (min-width: 768px) {
   .list-data__item__label {
     font-size: 13px; }
@@ -2910,7 +2916,7 @@ input[type="text"]:focus {
     font-size: 12px;
     color: #111; }
   .table-data th, .table-data td {
-    padding: 10px 0;
+    padding: 10px 3px;
     font-weight: light;
     text-align: center;
     border-bottom: 1px solid #ddd;
@@ -2961,7 +2967,7 @@ h3 {
   font-size: 16px;
   font-weight: normal;
   padding: 15px 10px 5px 10px;
-  margin: 0; }
+  margin: 0 !important; }
 
 .issue__description h1 {
   font-size: 14px;

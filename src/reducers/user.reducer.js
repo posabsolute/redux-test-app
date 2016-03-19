@@ -13,6 +13,7 @@ const initialState = {
 export function user(state = initialState, action) {
   switch (action.type) {
   case 'LOGIN_ATTEMPT':
+  console.log(action.data);
     return {
       ...state,
       ...action.data,
