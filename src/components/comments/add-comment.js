@@ -33,6 +33,25 @@ const mapDispatchToProps = (
   };
 };
 
+function getSquare(nb, startValue){
+  if(!startValue){
+    startValue = nb;
+  }
+
+  var testNb = nb / 2;
+
+  if(testNb === 1){
+    return null;
+  }
+
+  if( (testNb * testNb) !== startValue) {
+    return getSquare(testNb, startValue);
+  }else{
+    return testNb;
+  }
+
+}
+
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class LoginComponent extends React.Component {

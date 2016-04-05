@@ -2,11 +2,11 @@ import React from 'react';
 import InputText from 'components/form/inputText';
 import 'style!./login.scss';
 
-export default ({user, validate, loginSubmit, redirect}) => (
+export default ({user, validate, loginSubmit, redirect, showGrowlerError}) => (
   <div className="">
     <div className="login-bg"></div>
     <div className="row login-top-page">
-      <div cassName="col-sm-6 col-lg-12">
+      <div cassName="col-lg-12">
         <div className="login-icon-container">
           <img className="login-icon" src="images/logo.png"/>
         </div>
@@ -15,7 +15,7 @@ export default ({user, validate, loginSubmit, redirect}) => (
     <div className=" login-page">
       <div className="container">
         <div className="row">
-            <form className="col-sm-6 col-lg-12 login-bottom-container" onSubmit={(evt) => {evt.preventDefault(); loginSubmit(evt, validate, redirect);}}>
+            <form className="col-lg-12 login-bottom-container" onSubmit={(evt) => {evt.preventDefault(); loginSubmit(evt, validate, redirect, showGrowlerError);}}>
               <InputText
                 name="url"
                 placeholder="Jira Url (http://company.atlassian.net)"

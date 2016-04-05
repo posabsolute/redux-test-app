@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {validateProps} from 'redux-form-validator';
 import {validateActions} from 'redux-form-validator';
+import {GrowlerActions} from 'flash-notification-react-redux';
 import { push } from 'react-router-redux';
 
 import LoginForm from './login.jsx';
@@ -21,24 +22,32 @@ const mapDispatchToProps = (
 ) => {
   return {
     ...bindActionCreators(validateActions, dispatch),
-    loginSubmit(evt, validate, redirect) {
+    ...bindActionCreators(GrowlerActions, dispatch),
+    loginSubmit(evt, validate, redirect, showGrowlerError) {
       const form = evt.target;
       if (validate.formValidate(form.elements)) {
-        const url = form.url.value.replace(/\/(\s+)?$/, '');
+        let url = form.url.value.replace(/\/(\s+)?$/, '');
 
-        localStorage.setItem('username', form.username.value);
-        localStorage.setItem('password', form.password.value);
+        if (/atlassian\.net/.test(url)) {
+          url = url.replace('http:', 'https:');
+        }
 
         dispatch(login({
           username: form.username.value,
           password: form.password.value,
           url: url,
         })).then((action) =>{
-          localStorage.setItem('displayName', action.data.displayName);
-          localStorage.setItem('emailAddress', action.data.emailAddress);
-          localStorage.setItem('avatarUrls', action.data.avatarUrls['48x48']);
-          localStorage.setItem('url', url);
-          dispatch(push(redirect));
+          if(action.data) {
+            localStorage.setItem('displayName', action.data.displayName);
+            localStorage.setItem('emailAddress', action.data.emailAddress);
+            localStorage.setItem('username', form.username.value);
+            localStorage.setItem('password', form.password.value);
+            localStorage.setItem('avatarUrls', action.data.avatarUrls['48x48']);
+            localStorage.setItem('url', url);
+            dispatch(push(redirect));
+          }else{
+            showGrowlerError('Unauthorized');
+          }
         });
       }
     },
@@ -48,6 +57,7 @@ const mapDispatchToProps = (
 @connect(mapStateToProps, mapDispatchToProps)
 export default class LoginComponent extends React.Component {
   componentWillMount() {
+    console.log(this.props)
     this.validate = validateProps(this, userModel);
   }
   render() {

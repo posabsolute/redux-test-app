@@ -105,23 +105,22 @@
   visibility: hidden;
   width: 230px;
   height: 100%;
-  margin-left: -230px;
   opacity: 0.5;
   border-right: 1px solid #eee;
   display: block;
+  transform: translateX(-230px);
   background-color: #fff;
-  transition: opacity 0.3s, margin-left 0.3s;
-  transform: translateZ(0); }
+  transition: all 0.3s; }
 
 .sidebar--show {
   visibility: visible;
   opacity: 1;
-  margin-left: 0px; }
+  transform: translateX(0px); }
 
 .sidebar--hiding {
   visibility: visible;
   opacity: 0.8;
-  margin-left: -230px; }
+  transform: translateX(-230px); }
 
 .sidebar--hidden {
   visibility: hidden; }
@@ -2560,6 +2559,7 @@ section.row {
 
 body {
   position: relative;
+  min-height: 480px;
   /**
    * For IE 6/7 only
    * Include this rule to trigger hasLayout and contain floats.
@@ -2711,6 +2711,7 @@ input[type="text"]:focus {
   position: absolute;
   bottom: 0;
   left: 0;
+  margin-top: 250px;
   width: 100%; }
 
 .login-top-page {
@@ -2721,7 +2722,7 @@ input[type="text"]:focus {
   color: #fff;
   width: 150px;
   height: 150px;
-  margin: 24% 0 0 0; }
+  margin: 24% 0 -280px 0; }
 
 .login-icon-container {
   text-align: center;

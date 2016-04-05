@@ -28,18 +28,3 @@ export function bottomBarReducer(state = initialState, action) {
     return state;
   }
 }
-
-/*
-  example:
-  [
-    {
-      icon:'icon-settings',
-      label:'settings',
-      link:'/settings'
-    }
-
-  ]
-
-
-
- */

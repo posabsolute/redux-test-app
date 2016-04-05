@@ -1,4 +1,3 @@
-//import {GROWLER__SHOW} from 'actions/types/growler.types';
 import $  from 'jquery';
 import { push } from 'react-router-redux';
 const API_ROOT = '';
@@ -14,8 +13,9 @@ function callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method
     ajaxCall();
 
     function ajaxCall(startAt) {
-      const url = startAt ? `${fullUrl}&startAt=${startAt}` : fullUrl;
-      console.log(user);
+      const param = fullUrl.indexOf('?') > -1 ? '&' : '?';
+      const url = startAt ? `${fullUrl}${param}startAt=${startAt}` : fullUrl;
+
       return $.ajax({
         url: url,
         data: JSON.stringify(postData),
@@ -55,19 +55,26 @@ function callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method
         }
 
       }, (data, status, response) =>{
+        let errorText = response;
+        console.log(data)
+        if (data.status === 0) {
+          errorText = 'No Server';
+        }
+        if(data.status === 401) {
+          errorText = 'Unauthorized';
+        }
         store.dispatch({
           type: 'GROWLER__SHOW',
           growler: {
-            text: response,
+            text: errorText,
             type: 'growler--error',
           },
         });
         if(data.status === 401) {
           localStorage.removeItem('password');
-          console.log('test')
           store.dispatch(push('/login'));
         }
-        reject(response);
+        throw TypeError(errorText);
       });
 
     }
