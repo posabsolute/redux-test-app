@@ -19,10 +19,38 @@ input[type="text"], input[type="password"] {
   -webkit-appearance:none;
   appearance: none;
   border-radius: 0;
+  border: none;
 }
 
 input[type="text"]:focus {
   outline: none;
+}
+
+textarea{
+  width:100%;
+  border: none;
+  overflow: auto;
+  resize: none;
+  outline: none;
+  box-shadow: none;
+}
+
+select{
+  appearance: none;
+  display: block;
+  padding-left: 0px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline:none;
+}
+
+.filterLabel{
+  font-weight:300;
+}
+
+.search-padding{
+  margin:5px 0px 0 0;
 }
 
 .btn.btn-full{
@@ -50,4 +78,9 @@ input[type="text"]:focus {
     position: absolute;
     top: -7px;
     right: -6px;
+}
+
+
+.form-search{
+  margin-top:12px;
 }

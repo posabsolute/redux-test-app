@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import * as sprintActions from 'actions/sprints.action';
 import * as pageActions from 'actions/page.action';
+import * as searchActions from 'actions/search.action';
 import * as bottomBarActions from 'actions/bottom-bar.action';
 
 import BottomBar from 'components/bottombar/bottom-bar.jsx';
@@ -18,6 +19,7 @@ const mapDispatchToProps = dispatch => {
   return {
     ...bindActionCreators(sprintActions, dispatch),
     ...bindActionCreators(pageActions, dispatch),
+    ...bindActionCreators(searchActions, dispatch),
     ...bindActionCreators(bottomBarActions, dispatch),
   };
 };
@@ -35,6 +37,7 @@ export default class SprintsListContainer extends React.Component {
 
   componentWillUnmount() {
     this.props.hideBottomBar();
+    this.props.clearFilter();
   }
 
   render() {

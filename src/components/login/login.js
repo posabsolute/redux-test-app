@@ -37,7 +37,7 @@ const mapDispatchToProps = (
           password: form.password.value,
           url: url,
         })).then((action) =>{
-          if(action.data) {
+          if (action && action.data) {
             localStorage.setItem('displayName', action.data.displayName);
             localStorage.setItem('emailAddress', action.data.emailAddress);
             localStorage.setItem('username', form.username.value);
@@ -45,7 +45,7 @@ const mapDispatchToProps = (
             localStorage.setItem('avatarUrls', action.data.avatarUrls['48x48']);
             localStorage.setItem('url', url);
             dispatch(push(redirect));
-          }else{
+          }else {
             showGrowlerError('Unauthorized');
           }
         });

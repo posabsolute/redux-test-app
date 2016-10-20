@@ -5,8 +5,11 @@ const sprintsSelector = (state) => state.sprints;
 export const sprintsListSelector = createSelector(
   [ sprintsSelector ],
   (sprints) => {
+  	const sprintsClosed = sprints.filter(sprint => sprint.state === 'closed');
     return {
-      sprintsByDate: sprints.sort((sprintA, sprintB) => new Date(sprintB.completeDate) - new Date(sprintA.completeDate)) || [],
+      sprintsClosed,
+      sprintsActive: sprints.filter(sprint => sprint.state === 'active'),
+      sprintsClosedByDate: sprintsClosed.sort((sprintA, sprintB) => new Date(sprintB.completeDate) - new Date(sprintA.completeDate)) || [],
     };
   }
 );

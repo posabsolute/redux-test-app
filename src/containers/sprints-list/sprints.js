@@ -13,10 +13,10 @@ import * as bottomBarActions from 'actions/bottom-bar.action';
 import {sprintsListSelector} from 'selectors/sprints.selector';
 
 const mapStateToProps = state => ({
+  sprintsActive: sprintsListSelector(state).sprintsActive,
   sprints: state.sprints,
   routing: state.routing,
-  sprintsByDate: sprintsListSelector(state).sprintsByDate,
-
+  sprintsByDate: sprintsListSelector(state).sprintsClosedByDate,
 });
 const mapDispatchToProps = dispatch => {
   return {
@@ -36,6 +36,19 @@ export default class SprintsListContainer extends React.Component {
     return (
       <section className="row row__row--header row__row--bottom" key="sprintsContainer">
         <HeaderSection title={"Your Sprints"} background={"images/img2.jpg"} />
+        <h5 className="list-title">Active Sprints</h5>
+        <List
+          items={this.props.sprintsActive}
+          onClick={this.props.loadSprint}
+          descMod={(item, sprint) => <div>
+            <Time value={sprint.startDate} format="MMMM DD [ to ]" />
+            <Time value={sprint.endDate} format="MMMM DD, YYYY" />
+          </div>}
+          map={{
+            title: 'name',
+            desc: ['startDate'],
+          }} />
+        <h5 className="list-title col-xs-12">Closed Sprints</h5>
         <List
           items={this.props.sprintsByDate}
           onClick={this.props.loadSprint}
@@ -52,6 +65,7 @@ export default class SprintsListContainer extends React.Component {
   }
 
   render() {
+    console.log(this.props.sprints);
     return (
       <PageWrapper loaderKey="sprintsLoader" key="sprintsWrapper" state={this.props.sprints} wrap={this.page.bind(this)} />
     );
@@ -62,6 +76,7 @@ SprintsListContainer.propTypes = {
   fetchSprints: React.PropTypes.func,
   loadSprint: React.PropTypes.func,
   showSprintsListBottomBar: React.PropTypes.func,
+  sprintsActive: React.PropTypes.array,
   sprintsByDate: React.PropTypes.object,
   loadSprints: React.PropTypes.func,
   updatePageTitle: React.PropTypes.func,

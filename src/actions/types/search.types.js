@@ -2,3 +2,7 @@ export const SEARCH_REQUEST = 'ISSUE_REQUEST';
 export const SEARCH_FETCH = 'ISSUE_FETCH';
 export const SEARCH_FAILURE = 'SEARCH_FAILURE';
 export const SEARCH_CLEAR = 'SEARCH_CLEAR';
+export const SEARCH_QUERY = 'SEARCH_QUERY';
+export const CLEAR_SEARCH_QUERY = 'CLEAR_SEARCH_QUERY';
+export const SET_FILTER = 'SET_FILTER';
+export const CLEAR_FILTER = 'CLEAR_FILTER';

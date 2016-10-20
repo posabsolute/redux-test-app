@@ -15,9 +15,10 @@ export default class PageWrapper extends React.Component {
   }
 
   isEmpty(obj) {
+    console.log(obj.length)
+    console.log(obj.hasOwnProperty('size'))
     // null and undefined are "empty"
     if (!obj) return true;
-
     // Assume if it has a length property with a non-zero value
     // that that property is correct.
     if (obj.hasOwnProperty('size')) {
@@ -25,10 +26,9 @@ export default class PageWrapper extends React.Component {
       if (obj.size === 0) return true;
 
     }else {
-      if (obj.length > 0) return false;
-      if (obj.length === 0) return true;
+      if (obj.length > 0 ) return false;
+      if (obj.length < 0 || obj.length === 0) return true;
     }
-
     // Otherwise, does it have any properties of its own?
     // Note that this doesn't handle
     // toString and valueOf enumeration bugs in IE < 9

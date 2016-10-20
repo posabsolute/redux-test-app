@@ -32,11 +32,9 @@ const mapDispatchToProps = dispatch => {
         this.fetchSearch(query);
       }
     },
-    onSubmit(evt) {
-      this.props.searchIssues(evt.target.elements[0].value);
-    },
-    onChange(evt) {
-      this.props.searchIssues(evt.target.value);
+    onSearch(evt) {
+      let searchQuery = evt.target.elements ? evt.target.elements[0].value : evt.target.value;
+      this.props.searchIssues(searchQuery);
     },
   };
 };
@@ -77,8 +75,8 @@ export default class IssueSearchContainer extends React.Component {
       <section className="row pageRow" key="searchContainer">
         <div className="pad10">
           <IssueSearch
-            onChange={this.props.onChange.bind(this)}
-            onSubmit={this.props.onSubmit.bind(this)}
+            onChange={this.props.onSearch.bind(this)}
+            onSubmit={this.props.onSearch.bind(this)}
             defaultValue={this.props.params.query} />
           </div>
         <PageWrapper isLoading={this.props.search.isLoading} wrap={this.searchList.bind(this)} />

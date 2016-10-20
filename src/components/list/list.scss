@@ -31,23 +31,34 @@
 
   .list-title{
     font-size:15px;
+    font-weight: 300;
     line-height:18px;
     color:#f36;
-    padding:10px 0 10px 0;
-    border-bottom: 1px solid #f4f4f4;
+    width:100%;
+    padding: 13px 16px 10px 16px;
+    margin: 0;
   }
     .list-title--margin{
       margin:0 -10px;
       padding:10px 10px 10px 10px;
     }
-
+  .item--complete {
+    .list-item__title{
+      color:#666;
+    }
+  }
   .list-item__title{
     font-size: 18px;
     max-height: 78px;
+    color:#333;
     text-overflow:ellipsis;
     overflow:hidden;
     padding-bottom:3px;
   }
+  .list-item__title--bottom{
+    border-bottom: 1px solid #f4f4f4;
+  }
+  
 
   .list-item__desc{
     font-size: 12px;
@@ -56,12 +67,14 @@
 
 .floating-label{
   position:absolute;
-  bottom:15px;
+  bottom:10px;
   font-size:12px;
   right:10px;
 }
 
-
+.list--pad-bottom{
+  padding-bottom:10px;
+}
 
 .list-data__item__label{
   font-size:11px;

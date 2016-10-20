@@ -1,11 +1,12 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
+import Textarea from 'react-textarea-autosize';
 
 import 'style!./description.scss';
 
-export default ({description}) => (
+export default ({description, saveDescription}) => (
 	<div className="issue__description">
-		<ReactMarkdown source={description || 'No Description'} />
+
+		<Textarea defaultValue={description || "No Content"} onBlur={saveDescription} />
 	</div>
 );
 

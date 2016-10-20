@@ -42,12 +42,13 @@ export default class SprintsListContainer extends React.Component {
   }
 
   page() {
+    const completeDate = this.props.burndown.completeTime || this.props.burndown.endTime;
     return (
       <section className="row pageRow row__row--bottom"  key="burnContainer">
         <Burndown dataset={this.props.valuesPerDay} />
         <div className="list-data__row">
           <ListItem label="Start Date" text={<Time value={this.props.burndown.startTime} format="MMMM DD" />} />
-          <ListItem label="End Date" text={<Time value={this.props.burndown.completeTime} format="MMMM DD, YYYY" />} />
+          <ListItem label="End Date" text={<Time value={completeDate} format="MMMM DD, YYYY" />} />
         </div>
         { this.props.sprint.puntedIssues.length ?
           <List
@@ -67,7 +68,7 @@ export default class SprintsListContainer extends React.Component {
 
   render() {
     return (
-      <PageWrapper loaderKey="burnLoader" key="burnWrapper" state={this.props.valuesPerDay} wrap={this.page.bind(this)} />
+      <PageWrapper loaderKey="burnLoader" key="burnWrapper" state={this.props.burndown.changes} wrap={this.page.bind(this)} />
     );
   }
 }

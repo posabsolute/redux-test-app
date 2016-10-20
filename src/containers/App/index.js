@@ -14,6 +14,7 @@ import * as sidebarActions from 'actions/sidebar.action';
 import * as projectActions from 'actions/projects.action';
 import * as pageActions from 'actions/page.action';
 import * as configsActions from 'actions/configs.action';
+import * as sprintsActions from 'actions/sprints.action';
 
 function onDeviceReady() {
   window.open = window.cordova.InAppBrowser.open;
@@ -33,6 +34,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = dispatch => {
   return {
+    ...bindActionCreators(sprintsActions, dispatch),
     ...bindActionCreators(sidebarActions, dispatch),
     ...bindActionCreators(projectActions, dispatch),
     ...bindActionCreators(pageActions, dispatch),
@@ -58,15 +60,40 @@ export class App extends Component {
   }
   componentWillMount() {
     this.fetchProject();
-    this.setupNative();
+    this.setupBackgoundNotifications();
   }
 
-  setupNative() {
+  setupBackgoundNotifications() {
+    document.addEventListener('deviceready', () => {
+      const project = this.props.configs.project;
+      const Fetcher = window.BackgroundFetch;
+
+      window.cordova.plugins.notification.local.promptForPermission();
+
+      const fetchCallback = () => {
+        if (project.id) {
+          this.props.fetchSprints(project.id, true).then(() => {
+            Fetcher.finish();
+          });
+        }else {
+          Fetcher.finish();
+        }
+      };
+      const failureCallback = () => {
+        console.log('- BackgroundFetch failed');
+      };
+      if (Fetcher) {
+        Fetcher.configure(fetchCallback, failureCallback);
+      }
+
+    }, false);
   }
 
   fetchProject() {
     const project = this.props.configs.project;
+
     if (project.id) {
+      this.props.fetchProjectPriorities();
       this.props.selectProject(project);
       this.props.fetchProjectConfig(project.id).then((config) => {
         if (config) {
@@ -87,6 +114,7 @@ export class App extends Component {
           back={this.props.pageStore.back}
         />
         <Sidebar {...this.props}/>
+
         <div className="container">{this.props.children}</div>
       </section>
     );
@@ -99,6 +127,7 @@ App.propTypes = {
   pageStore: React.PropTypes.object,
   selectProject: React.PropTypes.func,
   showSidebar: React.PropTypes.func,
+  fetchSprints: React.PropTypes.func,
   fetchProjectConfig: React.PropTypes.func,
   goBack: React.PropTypes.func,
   hideBottomBar: React.PropTypes.func,

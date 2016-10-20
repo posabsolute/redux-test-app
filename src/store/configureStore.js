@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import apiMiddleware from '../middlewares/api';
+import notificationsMiddleware from '../middlewares/notifications';
 import {validateMiddleware} from 'redux-form-validator';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
@@ -15,6 +16,7 @@ const createStoreWithMiddleware = compose(
     thunkMiddleware,
     validateMiddleware,
     apiMiddleware,
+    notificationsMiddleware,
     router,
   ),
   window.devToolsExtension ? window.devToolsExtension() : f => f

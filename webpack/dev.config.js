@@ -8,7 +8,8 @@ module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
     'webpack-hot-middleware/client',
-    './src/index',
+    'webpack/hot/only-dev-server',
+    './src/index'
   ],
   cache:false,
   output: {
@@ -41,13 +42,7 @@ module.exports = {
       loader: 'imports?jQuery=jquery',
     }, {
       test:/\.jsx$/,
-      loader: ['babel'],
-      query: {
-        // https://github.com/babel/babel-loader#options
-        cacheDirectory: false,
-        plugins: ['transform-decorators-legacy' ],
-        presets: ['es2015', 'react', 'stage-0'],
-      },
+      loaders: ['react-hot', 'babel?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-decorators-legacy'],
       include: [
         path.resolve(__dirname, "../src"),
         path.resolve(__dirname, "../node_modules/flash-notification-react-redux"),
@@ -55,13 +50,7 @@ module.exports = {
       ],
     }, {
       test:/\.js$/,
-      loader: ['babel'],
-      query: {
-        // https://github.com/babel/babel-loader#options
-        cacheDirectory: true,
-        plugins: ['transform-decorators-legacy' ],
-        presets: ['es2015', 'react', 'stage-0'],
-      },
+      loaders: ['react-hot', 'babel?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-decorators-legacy'],
       include: [
         path.resolve(__dirname, "../src"),
         path.resolve(__dirname, "../node_modules/flash-notification-react-redux"),

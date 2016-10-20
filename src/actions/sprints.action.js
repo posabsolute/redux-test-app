@@ -1,6 +1,8 @@
 import { CALL_API } from '../middlewares/api';
 import sprintModel from '../models/sprint.model';
-import {SPRINTS_LIST_REQUEST, SPRINTS_LIST_FETCH, SPRINT_UPDATE_POINTS, SPRINTS_LIST_FAILURE,
+import dispatch from 'react-redux';
+import {SPRINTS_LIST_REQUEST, SPRINTS_LIST_FETCH, SPRINT_UPDATE_POINTS, SPRINTS_LIST_FAILURE, 
+       SPRINTS_LIST_ACTIVE_REQUEST, SPRINTS_LIST_ACTIVE_FETCH,
        SPRINT_ISSUES_REQUEST, SPRINT_ISSUES_FETCH, SPRINT_ISSUES_FAILURE,
        BURNDOWN_REQUEST, BURNDOWN_FETCH, BURNDOWN_FETCH_FAILURE,
        VELOCITY_REQUEST, VELOCITY_FETCH, VELOCITY_FETCH_FAILURE,
@@ -9,17 +11,29 @@ import {SPRINTS_LIST_REQUEST, SPRINTS_LIST_FETCH, SPRINT_UPDATE_POINTS, SPRINTS_
        SPRINT_REQUEST, SPRINT_FETCH, SPRINT_FAILURE} from './types/sprints.types';
 
 
-export function fetchSprints(projectId) {
+export function fetchSprints(projectId, notification) {
   return {
     [CALL_API]: {
       types: [ SPRINTS_LIST_REQUEST, SPRINTS_LIST_FETCH, SPRINTS_LIST_FAILURE ],
       endpoint: sprintModel.endpointCollection(projectId),
       dataProcessor: sprintModel.endpointCollectionProcessor,
       model: sprintModel,
+      notification,
     },
   };
 }
 
+
+export function fetchActiveSprints(projectId) {
+  return {
+    [CALL_API]: {
+      types: [ SPRINTS_LIST_ACTIVE_REQUEST, SPRINTS_LIST_ACTIVE_FETCH, SPRINTS_LIST_FAILURE ],
+      endpoint: sprintModel.endpointActiveCollection(projectId),
+      dataProcessor: sprintModel.endpointCollectionProcessor,
+      model: sprintModel,
+    },
+  };
+}
 
 export function fetchBurndown(id, projectId) {
   return {

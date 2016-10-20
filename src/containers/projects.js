@@ -23,7 +23,10 @@ const mapDispatchToProps = dispatch => {
     ...bindActionCreators(sprintActions, dispatch),
     loadSprints(project) {
       this.props.selectProject(project);
-      this.props.fetchProjectConfig(project.id);
+      this.props.fetchProjectConfig(project.id).then(() => {
+        this.props.fetchProjectPriorities();
+        this.props.fetchProjectUsers(project.id);
+      });
       dispatch(push(`/projects/${project.id}/sprints/index`));
     },
   };

@@ -10,7 +10,7 @@ export default class LoginComponent extends React.Component {
   render() {
 
     return (
-      <form className="relative" onSubmit={ (evt) => { evt.preventDefault(); this.props.onSubmit(evt); } }>
+      <form className="relative form-search" onSubmit={ (evt) => { evt.preventDefault(); this.props.onSubmit(evt); } }>
         <input
           type="text"
           onChange={this.props.onChange}

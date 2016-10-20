@@ -6,15 +6,21 @@ import { connect } from 'react-redux';
 import List from 'components/list/list-container';
 import HeaderSection from 'components/header-section/header-section.jsx';
 import PageWrapper from 'components/page-wrapper';
+import IssueSearch from 'components/form/search';
+import SelectForm from 'components/form/select.jsx';
+import ListItem from 'components/list/list-item-small';
+
 
 import * as actions from 'actions/sprints.action';
 import * as pageActions from 'actions/page.action';
 import * as bottomBarActions from 'actions/bottom-bar.action';
+import * as searchActions from 'actions/search.action';
 
 import {issuesListSelector} from 'selectors/issues.selector';
 
 const mapStateToProps = state => ({
   sprint: state.sprint,
+  search: state.search,
   stories: issuesListSelector(state).stories,
   otherIssues: issuesListSelector(state).otherIssues,
 });
@@ -24,8 +30,13 @@ const mapDispatchToProps = dispatch => {
     ...bindActionCreators(bottomBarActions, dispatch),
     ...bindActionCreators(actions, dispatch),
     ...bindActionCreators(pageActions, dispatch),
+    ...bindActionCreators(searchActions, dispatch),
     loadIssue: (issue) => {
-      dispatch(push(`/issue/${issue.id}`));
+      dispatch(push(`/issue/${issue.key}`));
+    },
+    onSearch(evt) {
+      let searchQuery = evt.target.elements ? evt.target.elements[0].value : evt.target.value;
+      this.props.setSearchQuery(searchQuery);
     },
   };
 };
@@ -37,9 +48,13 @@ export default class SprintContainer extends React.Component {
   }
 
   getSubtitle() {
-    if (this.props.sprint.allIssuesEstimateSum) {
-      const completedIssuesEstimateSum = parseInt(this.props.sprint.completedIssuesEstimateSum.text, 10) ? this.props.sprint.completedIssuesEstimateSum.text : 0;
-      const allIssuesEstimateSum = parseInt(this.props.sprint.allIssuesEstimateSum.text, 10) ? this.props.sprint.allIssuesEstimateSum.text : 0;
+    const fullEstimate = this.props.sprint.completedIssuesEstimateSum.value;
+    const completedEstimate = this.props.sprint.allIssuesEstimateSum.value;
+    const completedEstimateActiveSprint = this.props.sprint.completedIssuesEstimateSum.value;
+
+    if (fullEstimate) {
+      const completedIssuesEstimateSum = parseInt(fullEstimate, 10) || 0;
+      const allIssuesEstimateSum = parseInt(completedEstimate, 10) || parseInt(completedEstimateActiveSprint, 10) || 0;
       return (
         <div>
           <span className="header-section__small_text">Story Points: {allIssuesEstimateSum}</span>
@@ -51,15 +66,58 @@ export default class SprintContainer extends React.Component {
     return null;
   }
 
+  setStatusFilter(evt) {
+    this.props.setFilter("sprint-status", evt.target.value);
+  }
+  setUserFilter(evt) {
+    this.props.setFilter("sprint-user", evt.target.value);
+  }
+
   page() {
     return (
       <section className="row  row__row--header row__row--bottom" key="sprintContainer">
         <HeaderSection title={this.props.sprint.name} background={"images/img3.jpg"} subtitle={this.getSubtitle()} />
+        <div className="col-xs-12 search-padding">
+          <IssueSearch
+            onChange={this.props.onSearch.bind(this)}
+            onSubmit={this.props.onSearch.bind(this)}
+          />
+        </div>
+
+        <div className="col-xs-12 list--pad-bottom">
+          <ListItem label="Status" text="">
+            <SelectForm
+              defaultOption="All"
+              currentValue={this.props.search.filters['sprint-status']}
+              filterValues={this.props.sprint.statuses} 
+              onChangeEvent={this.setStatusFilter.bind(this)} />
+           </ListItem>
+
+          <ListItem label="Users" text="">
+            <SelectForm 
+              defaultOption="All"
+              currentValue={this.props.search.filters['sprint-user']}
+              filterValues={this.props.sprint.users} 
+              onChangeEvent={this.setUserFilter.bind(this)} />
+          </ListItem>
+        </div>
+
         { this.props.stories.length ?
           (<List
             title="Stories"
             items={this.props.stories}
-            floatingLabelMod= {(points) => `${points} points`}
+            baseCSSmod= {function(item) {
+              return this === 'active' && item.done === true ? 'item--complete' : 'item--uncomplete'
+            }.bind(this.props.sprint.state)}
+            floatingLabelMod= {(points) => {
+              const data = points || 0;
+              return `${data} points`;
+            }}
+            descMod= {(status, item) => <div>
+              {
+                item.assigneeName ? `${status} - Assigned to ${item.assigneeName}`: `${status}`
+              }
+            </div>}
             onClick={this.props.loadIssue.bind(this)}
             map={{
               title: ['summary'],
@@ -69,10 +127,11 @@ export default class SprintContainer extends React.Component {
             }} />)
           : null
         }
-        { this.props.otherIssues && this.props.otherIssues.length ?
+        { this.props.otherIssues.length ?
           <List
             title="Other Issues"
             items={this.props.otherIssues}
+            sprintState={this.props.sprint.state}
             onClick={this.props.loadIssue.bind(this)}
             map={{
               title: ['summary'],

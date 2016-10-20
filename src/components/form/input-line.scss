@@ -1,4 +1,4 @@
-.input-line{
+input[type="text"].input-line, input[type="password"].input-line{
 	appearance:none;
 	border:none;
 	border-bottom:1px solid #888;
@@ -30,7 +30,7 @@
 	color:#red;
 }
 
-.input-line--red{
+input[type="text"].input-line--red, input[type="password"].input-line--red{
 	height:30px;
 	line-height:30px;
 	color: #f36;

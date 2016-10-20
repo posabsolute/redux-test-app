@@ -2,6 +2,7 @@ import { CALL_API } from '../middlewares/api';
 import projectModel from '../models/project.model';
 import {PROJECT_LIST_REQUEST, PROJECT_LIST_FETCH, PROJECT_LIST_FAILURE,
         PROJECT_CONFIG_REQUEST, PROJECT_CONFIG_FETCH, PROJECT_CONFIG_FAILURE,
+        PROJECT_PRIORITIES_REQUEST, PROJECT_PRIORITIES_FETCH, PROJECT_PRIORITIES_FAILURE,
         PROJECT_CLEAR, PROJECT_SELECTED} from './types/projects.types';
 
 
@@ -25,6 +26,17 @@ export function fetchProjectConfig(id) {
     },
   };
 }
+
+export function fetchProjectPriorities() {
+  return {
+    [CALL_API]: {
+      types: [ PROJECT_PRIORITIES_REQUEST, PROJECT_PRIORITIES_FETCH, PROJECT_PRIORITIES_FAILURE ],
+      endpoint: projectModel.endpointPriorities(),
+      model: projectModel,
+    },
+  };
+}
+
 
 export function selectProject(project) {
   localStorage.setItem('project', JSON.stringify(project));

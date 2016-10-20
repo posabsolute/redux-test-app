@@ -1,5 +1,5 @@
 import { PAGE_CHANGE_TITLE } from 'actions/types/page.types';
-import { PROJECT_SELECTED, PROJECT_CONFIG_FETCH } from 'actions/types/projects.types';
+import { PROJECT_SELECTED, PROJECT_CONFIG_FETCH, PROJECT_PRIORITIES_FETCH } from 'actions/types/projects.types';
 import { CONFIG_CLEAR } from 'actions/types/configs.types';
 
 const projectStore = localStorage.getItem('project') && JSON.parse(localStorage.getItem('project'));
@@ -10,6 +10,8 @@ const initialState = {
     current: {},
     last5: [],
   },
+  priorities: [],
+  prioritiesName: [],
   project: projectStore || {},
   board: {
     estimation: {field: {}},
@@ -39,6 +41,14 @@ export function configs(state = initialState, action) {
         },
         last5: last5,
       },
+    };
+
+  case PROJECT_PRIORITIES_FETCH:
+    const prioritiesName = action.data.map(priority => priority.name);
+    return {
+      ...state,
+      priorities:[...action.data],
+      prioritiesName:[...prioritiesName],
     };
 
   case PROJECT_SELECTED:

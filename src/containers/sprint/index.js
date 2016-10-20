@@ -7,6 +7,8 @@ import * as pageActions from 'actions/page.action';
 
 import BottomBar from 'components/bottombar/bottom-bar.jsx';
 import * as bottomBarActions from 'actions/bottom-bar.action';
+import * as projectsActions from 'actions/projects.action';
+import * as searchActions from 'actions/search.action';
 
 
 const mapStateToProps = state => ({
@@ -20,7 +22,9 @@ const mapDispatchToProps = dispatch => {
   return {
     ...bindActionCreators(actions, dispatch),
     ...bindActionCreators(pageActions, dispatch),
+    ...bindActionCreators(projectsActions, dispatch),
     ...bindActionCreators(bottomBarActions, dispatch),
+    ...bindActionCreators(searchActions, dispatch),
   };
 };
 
@@ -30,6 +34,7 @@ export default class SprintsListContainer extends React.Component {
     const projectId = this.props.configs.project.id;
     this.props.pageBack(false);
     this.props.fetchSprint(this.props.params.id);
+    this.props.fetchSprintIssues(this.props.params.id);
     this.props.fetchBurndown(this.props.params.id, projectId);
     this.props.fetchSprintReport(this.props.params.id, projectId).then(() => {
       this.props.updatePageTitle(this.props.sprint.name, this.props.sprint.name, this.props.routing.path);
@@ -38,6 +43,7 @@ export default class SprintsListContainer extends React.Component {
 
   componentWillUnmount() {
     this.props.hideBottomBar();
+    this.props.clearSearchQuery();
   }
 
   render() {

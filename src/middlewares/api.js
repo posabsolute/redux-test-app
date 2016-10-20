@@ -4,7 +4,7 @@ const API_ROOT = '';
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
-function callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method, postData) {
+function callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method, postData, error) {
   const callUrl = user.url + endpoint;
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + callUrl : callUrl;
 
@@ -16,21 +16,55 @@ function callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method
       const param = fullUrl.indexOf('?') > -1 ? '&' : '?';
       const url = startAt ? `${fullUrl}${param}startAt=${startAt}` : fullUrl;
 
-      return $.ajax({
-        url: url,
-        data: JSON.stringify(postData),
-        processData: false,
-        crossDomain: true,
-        contentType: 'application/json',
-        method: method || 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'x-requested-with': 'XMLHttpRequest',
-          'Authorization': 'Basic ' + btoa(user.username + ':' + user.password),
-        },
-      })
-      .then((data) => {
+      if (window.cordovaFetch) {
+        cordovaFetch(url, {
+          body: JSON.stringify(postData),
+          method: method || 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'x-requested-with': 'XMLHttpRequest',
+            'Authorization': 'Basic ' + btoa(user.username + ':' + user.password),
+          },
+        })
+        .then((resp) => {
+            console.log(resp);
+          if (resp.status === 200 || rest.status === 201 || rest.status === 204) {
+            success(JSON.parse(resp.statusText));
+          } else {
+            catchError(resp.responseText, resp.status, resp);
+          }
+        });
+
+      } else {
+
+        $.ajax({
+          url: url,
+          data: JSON.stringify(postData),
+          processData: false,
+          crossDomain: true,
+          contentType: 'application/json',
+          method: method || 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'x-requested-with': 'XMLHttpRequest',
+            'Authorization': 'Basic ' + btoa(user.username + ':' + user.password),
+          },
+        })
+        .then((data) => {
+          success(data);
+        }, (data, status, response) =>{
+          catchError(data, status, response);
+        });
+      }
+
+      function success(data) {
+        console.log('success', data);
         const pageData = (dataProcessor) ? dataProcessor(data) : data;
+        if (!data) {
+          resolve([]);
+          return;
+        }
         if (data.isLast === false) {
           allPagedData = [
             ...allPagedData,
@@ -53,34 +87,47 @@ function callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method
           }
           resolve(allPagedData);
         }
+      }
 
-      }, (data, status, response) =>{
+      function catchError(data, status, response) {
+        console.log('error', response);
         let errorText = response;
-        console.log(data)
         if (data.status === 0) {
           errorText = 'No Server';
         }
-        if(data.status === 401) {
+        if (data.status === 401) {
           errorText = 'Unauthorized';
         }
-        store.dispatch({
-          type: 'GROWLER__SHOW',
-          growler: {
-            text: errorText,
-            type: 'growler--error',
-          },
-        });
-        if(data.status === 401) {
+
+        if (errorText && errorText !== 'Bad Request' ) {
+          store.dispatch({
+            type: 'GROWLER__SHOW',
+            growler: {
+              text: errorText,
+              type: 'growler--error',
+            },
+          });
+        }
+
+        if (data.status === 401) {
           localStorage.removeItem('password');
           store.dispatch(push('/login'));
         }
-        throw TypeError(errorText);
-      });
 
+        if (error) {
+          store.dispatch({
+            type: 'GROWLER__SHOW',
+            growler: {
+              text: error,
+              type: 'growler--error',
+            },
+          });
+        }
+
+        reject(data);
+      }
     }
   });
-
-
 }
 
 // Action key that carries API call info interpreted by this Redux middleware.
@@ -95,7 +142,7 @@ export default store => next => action => {
   }
 
   let { endpoint } = callAPI;
-  const { dataProcessor, types, callData, sideEffectSuccess, validate, method, postData } = callAPI;
+  const { dataProcessor, types, callData, sideEffectSuccess, validate, method, postData, notification, error } = callAPI;
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState());
@@ -126,13 +173,13 @@ export default store => next => action => {
   next(actionWith({ data: callData, type: requestType }));
   const user = store.getState().user;
 
-
-  return callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method, postData).then(
+  console.log(this);
+  return callApi(endpoint, user, dataProcessor, store, sideEffectSuccess, method, postData, error).then(
     data => next(actionWith({
       data,
+      notification,
       type: successType,
-    })),
-    error => {
+    }))).catch( error => {
       next(actionWith({
         type: failureType,
         data: callData,

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, hashHistory, Redirect } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import 'react-fastclick';
 
 import configureStore from './store/configureStore';
 import routes from './routes';
